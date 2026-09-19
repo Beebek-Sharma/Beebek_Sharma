@@ -72,16 +72,17 @@ export const interests = [
 
 export const techStack = [
   ['Languages', 'Python · JavaScript · C/C++ · SQL'],
-  ['Frontend', 'HTML · CSS · React · Vite · Tailwind CSS'],
-  ['Backend', 'Django · Django REST Framework · FastAPI · Flask · REST APIs'],
+  ['Frontend', 'HTML · CSS · JavaScript · React.js · Vite · Tailwind CSS · Responsive Web Design'],
+  ['Backend', 'Django · Django REST Framework · FastAPI · Flask · REST APIs · Authentication · CRUD Operations · Flask-SocketIO'],
   ['AI / LLM', 'LLMs · RAG · LangChain · Azure OpenAI · NLP · Vector Databases'],
   ['Databases', 'PostgreSQL · MySQL · SQLite · Vector Databases'],
-  ['Networking', 'TCP/IP · LAN/WAN · Wi-Fi · WebRTC · Router Configuration'],
-  ['Tools', 'Git · GitHub · Docker · Linux · CI/CD'],
+  ['Networking', 'TCP/IP · LAN/WAN · Wi-Fi Configuration · Router Configuration · Hardware and Software Troubleshooting · WebRTC'],
+  ['Tools', 'Git · GitHub · Docker · Linux · Windows · REST API Testing · Virtual Environments · CI/CD'],
 ] as const
 
 export const links = {
   email: 'bibeksharma976@gmail.com',
+  phone: '+977-9764186637',
   github: 'https://github.com/Beebek-Sharma',
   linkedin: 'https://www.linkedin.com/in/beebek-sharma-954686331/',
   medium: 'https://medium.com/@bibehsharma777',
