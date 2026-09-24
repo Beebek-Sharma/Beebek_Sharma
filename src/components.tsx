@@ -1,5 +1,6 @@
 import { lazy, useEffect, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
+import { SoundToggle } from './SoundToggle'
 import { links } from './data'
 import { useReveal, useScrolled } from './hooks'
 
@@ -38,27 +39,30 @@ export function Header() {
   return <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
     <div className="header-inner">
       <a className="wordmark" href="#top" aria-label="Beebek Sharma home" onClick={() => setOpen(false)}>BEEBEK<span>.</span></a>
-      <button
-        className="menu-toggle"
-        type="button"
-        aria-expanded={open}
-        aria-controls="site-navigation"
-        aria-label={open ? 'Close primary navigation' : 'Open primary navigation'}
-        onClick={() => setOpen(!open)}
-      >
-        <span>{open ? 'Close' : 'Menu'}</span><i aria-hidden="true">{open ? '×' : '↘'}</i>
-      </button>
-      {open && <div className="nav-backdrop" aria-hidden="true" onClick={() => setOpen(false)} />}
-      <nav id="site-navigation" className={`site-nav ${open ? 'is-open' : ''}`} aria-label="Primary navigation">
-        <div className="nav-links">
-          {items.map(([label, id]) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>{label}</a>)}
-        </div>
-        <div className="social-links">
-          <span className="nav-note">Based in Nepal</span>
-          <a href={links.github} target="_blank" rel="noreferrer">GitHub</a>
-          <a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-        </div>
-      </nav>
+      <div className="header-right">
+        <SoundToggle />
+        <button
+          className="menu-toggle"
+          type="button"
+          aria-expanded={open}
+          aria-controls="site-navigation"
+          aria-label={open ? 'Close primary navigation' : 'Open primary navigation'}
+          onClick={() => setOpen(!open)}
+        >
+          <span>{open ? 'Close' : 'Menu'}</span><i aria-hidden="true">{open ? '×' : '↘'}</i>
+        </button>
+        {open && <div className="nav-backdrop" aria-hidden="true" onClick={() => setOpen(false)} />}
+        <nav id="site-navigation" className={`site-nav ${open ? 'is-open' : ''}`} aria-label="Primary navigation">
+          <div className="nav-links">
+            {items.map(([label, id]) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>{label}</a>)}
+          </div>
+          <div className="social-links">
+            <span className="nav-note">Based in Nepal</span>
+            <a href={links.github} target="_blank" rel="noreferrer">GitHub</a>
+            <a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
+        </nav>
+      </div>
     </div>
   </header>
 }
