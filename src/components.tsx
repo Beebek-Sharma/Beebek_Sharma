@@ -1,4 +1,4 @@
-import { lazy, useState } from 'react'
+import { lazy, useEffect, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 import { links } from './data'
 import { useReveal, useScrolled } from './hooks'
@@ -21,12 +21,34 @@ export function Header() {
   const scrolled = useScrolled()
   const items = [['Work', 'work'], ['About', 'about'], ['Experience', 'experience'], ['Interests', 'interests']]
 
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = originalOverflow
+    }
+  }, [open])
+
   return <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
     <div className="header-inner">
-      <a className="wordmark" href="#top" aria-label="Beebek Sharma home">BEEBEK<span>.</span></a>
-      <button className="menu-toggle" type="button" aria-expanded={open} aria-controls="site-navigation" onClick={() => setOpen(!open)}>
+      <a className="wordmark" href="#top" aria-label="Beebek Sharma home" onClick={() => setOpen(false)}>BEEBEK<span>.</span></a>
+      <button
+        className="menu-toggle"
+        type="button"
+        aria-expanded={open}
+        aria-controls="site-navigation"
+        aria-label={open ? 'Close primary navigation' : 'Open primary navigation'}
+        onClick={() => setOpen(!open)}
+      >
         <span>{open ? 'Close' : 'Menu'}</span><i aria-hidden="true">{open ? '×' : '↘'}</i>
       </button>
+      {open && <div className="nav-backdrop" aria-hidden="true" onClick={() => setOpen(false)} />}
       <nav id="site-navigation" className={`site-nav ${open ? 'is-open' : ''}`} aria-label="Primary navigation">
         <div className="nav-links">
           {items.map(([label, id]) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>{label}</a>)}
@@ -41,21 +63,15 @@ export function Header() {
   </header>
 }
 
-export const HeroScene = lazy(() => import('./HeroScene').then((module) => ({ default: module.HeroScene })))
-
 export const FangYuanScene = lazy(() => import('./FangYuanScene').then((module) => ({ default: module.FangYuanScene })))
 export const CicadaScene = lazy(() => import('./CicadaScene').then((module) => ({ default: module.CicadaScene })))
-
-export function HeroFallback() {
-  return <div className="hero-fallback" aria-label="Abstract connected system visualization" role="img"><span>SYS / 001</span><span>CONNECTED SYSTEMS</span></div>
-}
 
 export function FangYuanFallback() {
   return <div className="fang-scene-fallback" role="img" aria-label="Fang Yuan 3D statue loading"><span>方源 · FANG YUAN</span><i aria-hidden="true" /><small>GREAT LOVE VENERABLE</small></div>
 }
 
 export function CicadaFallback() {
-  return <div className="fang-scene-fallback" role="img" aria-label="Spring Autumn Cicada 3D artifact loading"><span>春秋蝉 · RANK 6 GU</span><i aria-hidden="true" /><small>TIME PATH VITAL GU</small></div>
+  return <div className="fang-scene-fallback" role="img" aria-label="Spring Autumn Cicada 3D artifact loading"><span>春秋蝉 · SPRING AUTUMN CICADA</span><i aria-hidden="true" /><small>SPRING AUTUMN CICADA</small></div>
 }
 
 export function ArchitectureDiagram() {

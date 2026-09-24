@@ -1,6 +1,6 @@
 import { Suspense, useRef, useState } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
-import { ArchitectureDiagram, CicadaFallback, CicadaScene, FangYuanFallback, FangYuanScene, HeroFallback, HeroScene, NlpDiagram, PlatformDiagram, RagDiagram, Reveal, SectionHeading } from './components'
+import { ArchitectureDiagram, CicadaFallback, CicadaScene, FangYuanFallback, FangYuanScene, NlpDiagram, PlatformDiagram, RagDiagram, Reveal, SectionHeading } from './components'
 import { experience, interests, labGroups, links, projects, techStack } from './data'
 
 export function Hero() {
@@ -13,17 +13,10 @@ export function Hero() {
       <Reveal className="hero-actions"><a className="button button-primary" href="#work">Explore work <span>↘</span></a><a className="button button-quiet" href={links.resume || '#contact'} download={links.resume ? 'Beebek_Sharma.pdf' : undefined}>{links.resume ? 'Resume' : 'Contact'} <span>↗</span></a></Reveal>
       <Reveal className="hero-meta"><span>Lahan, Nepal</span><span>27°43′N / 85°19′E</span><span>2026</span></Reveal>
     </div>
-    <Reveal className="hero-artifacts-pair">
-      <div className="hero-artifact-item">
-        <Suspense fallback={<CicadaFallback />}>
-          <CicadaScene />
-        </Suspense>
-      </div>
-      <div className="hero-artifact-item">
-        <Suspense fallback={<FangYuanFallback />}>
-          <FangYuanScene />
-        </Suspense>
-      </div>
+    <Reveal className="hero-artifact">
+      <Suspense fallback={<FangYuanFallback />}>
+        <FangYuanScene />
+      </Suspense>
     </Reveal>
     <div className="hero-scroll"><span>Scroll to inspect</span><span className="scroll-line" /></div>
   </section>
@@ -96,5 +89,5 @@ export function Education() {
 }
 
 export function Contact() {
-  return <section className="contact-section" id="contact"><div className="contact-inner"><span className="eyebrow">09 / Open channel</span><h2>Let’s build<br /><em>something.</em></h2><p>For projects, collaboration, or technical conversations.</p><div className="contact-links">{links.email ? <a href={`mailto:${links.email}`}>Email <span>↗</span></a> : <span className="contact-pending">Email / address to add</span>}{links.phone ? <a href={`tel:${links.phone}`}>Phone <span>↗</span></a> : null}<a href={links.github} target="_blank" rel="noreferrer">GitHub <span>↗</span></a><a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a><a href={links.medium} target="_blank" rel="noreferrer">Medium <span>↗</span></a><a href={links.instagram} target="_blank" rel="noreferrer">Instagram <span>↗</span></a><a href={links.facebook} target="_blank" rel="noreferrer">Facebook <span>↗</span></a></div></div></section>
+  return <section className="contact-section" id="contact"><div className="contact-inner"><div className="contact-copy"><span className="eyebrow">09 / Open channel</span><h2>Let’s build<br /><em>something.</em></h2><p>For projects, collaboration, or technical conversations.</p><div className="contact-links">{links.email ? <a href={`mailto:${links.email}`}>Email <span>↗</span></a> : <span className="contact-pending">Email / address to add</span>}{links.phone ? <a href={`tel:${links.phone}`}>Phone <span>↗</span></a> : null}<a href={links.github} target="_blank" rel="noreferrer">GitHub <span>↗</span></a><a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a><a href={links.medium} target="_blank" rel="noreferrer">Medium <span>↗</span></a><a href={links.instagram} target="_blank" rel="noreferrer">Instagram <span>↗</span></a><a href={links.facebook} target="_blank" rel="noreferrer">Facebook <span>↗</span></a></div></div><Reveal className="contact-cicada"><Suspense fallback={<CicadaFallback />}><CicadaScene /></Suspense></Reveal></div></section>
 }

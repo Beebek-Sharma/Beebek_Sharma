@@ -157,10 +157,10 @@ function SpringAutumnCicada({ quality, reduced }: { quality: SceneQuality; reduc
 
     const t = timeRef.current
     if (!reduced) {
-      const hoverY = Math.sin(t * 1.8) * 0.04
-      const rollZ = Math.sin(t * 1.1) * 0.025
-      const pitchX = Math.sin(t * 1.4) * 0.02
-      cicadaGroup.current.position.y = 0.22 + hoverY
+      const hoverY = Math.sin(t * 1.8) * 0.03
+      const rollZ = Math.sin(t * 1.1) * 0.02
+      const pitchX = Math.sin(t * 1.4) * 0.015
+      cicadaGroup.current.position.y = 0.16 + hoverY
       cicadaGroup.current.rotation.z = rollZ
       cicadaGroup.current.rotation.x = 0.18 + pitchX
 
@@ -182,7 +182,7 @@ function SpringAutumnCicada({ quality, reduced }: { quality: SceneQuality; reduc
   const segsSm = low ? 6 : 12
 
   return (
-    <group ref={cicadaGroup} position={[0, 0.22, 0]} rotation={[0.18, 0, 0]} scale={1.15}>
+    <group ref={cicadaGroup} position={[0, 0.16, 0]} rotation={[0.18, 0, 0]} scale={0.88}>
       {/* 1. Head & Compound Eyes */}
       <group position={[0, 0.03, 0.38]}>
         <mesh scale={[1.1, 0.65, 0.75]}>
@@ -401,30 +401,6 @@ function CicadaPedestal({ quality }: { quality: SceneQuality }) {
         <torusGeometry args={[0.88, 0.014, low ? 4 : 8, low ? 32 : 56]} />
         <meshStandardMaterial color="#e5c158" roughness={0.2} metalness={0.9} />
       </mesh>
-
-      {/* Nameplate plaque */}
-      <group position={[0, 0.01, 1.01]}>
-        <mesh scale={[0.48, 0.13, 0.016]}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color="#060a08" roughness={0.4} metalness={0.5} />
-        </mesh>
-        <mesh scale={[0.5, 0.145, 0.008]}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color="#d4af37" roughness={0.28} metalness={0.85} />
-        </mesh>
-        <mesh position={[-0.08, 0.005, 0.01]} scale={[0.07, 0.055, 0.004]}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color="#f0cf65" roughness={0.2} metalness={0.9} emissive="#523d0c" emissiveIntensity={0.35} />
-        </mesh>
-        <mesh position={[0.08, 0.005, 0.01]} scale={[0.07, 0.055, 0.004]}>
-          <boxGeometry args={[1, 1, 1]} />
-          <meshStandardMaterial color="#f0cf65" roughness={0.2} metalness={0.9} emissive="#523d0c" emissiveIntensity={0.35} />
-        </mesh>
-        <mesh position={[0, 0.005, 0.012]}>
-          <sphereGeometry args={[0.022, low ? 6 : 12, low ? 6 : 10]} />
-          <meshStandardMaterial color="#4ade80" roughness={0.15} metalness={0.6} emissive="#166534" emissiveIntensity={0.8} />
-        </mesh>
-      </group>
     </group>
   )
 }
@@ -443,8 +419,8 @@ function CicadaRelicGeometry({
   useFrame((_, delta) => {
     if (!relicGroup.current) return
     const m = motion.current
-    if (!m.dragging && !reduced && quality === 'high') {
-      m.targetY += delta * 0.04
+    if (!m.dragging && !reduced) {
+      m.targetY += delta * 0.14
     }
     m.x = THREE.MathUtils.damp(m.x, m.targetX, quality === 'low' ? 7 : 9, delta)
     m.y = THREE.MathUtils.damp(m.y, m.targetY, quality === 'low' ? 7 : 9, delta)
@@ -452,7 +428,7 @@ function CicadaRelicGeometry({
   })
 
   return (
-    <group ref={relicGroup} rotation={[0.18, -0.35, 0]}>
+    <group ref={relicGroup} position={[0, -0.06, 0]} scale={[0.58, 0.58, 0.58]} rotation={[0.18, -0.35, 0]}>
       <SpringAutumnCicada quality={quality} reduced={reduced} />
       <RiverOfTime quality={quality} reduced={reduced} />
       <CicadaPedestal quality={quality} />
@@ -505,7 +481,7 @@ export function CicadaScene() {
     event.preventDefault()
     const dx = event.clientX - state.lastX
     const dy = event.clientY - state.lastY
-    state.targetY = THREE.MathUtils.clamp(state.targetY + dx * 0.007, -1.8, 1.8)
+    state.targetY += dx * 0.007
     state.targetX = THREE.MathUtils.clamp(state.targetX + dy * 0.007, -0.85, 0.85)
     state.lastX = event.clientX
     state.lastY = event.clientY
@@ -523,7 +499,7 @@ export function CicadaScene() {
     invalidateRef.current()
   }
 
-  const frameMode = !visible ? 'never' : quality === 'high' && !reduced ? 'always' : 'demand'
+  const frameMode = visible ? 'always' : 'never'
 
   return (
     <div
@@ -536,10 +512,9 @@ export function CicadaScene() {
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
     >
-      <div className="fang-scene-grid" aria-hidden="true" />
       <Canvas
-        camera={{ position: [0, 0.42, 2.7], fov: 38 }}
-        dpr={quality === 'low' ? 1 : [1, 1.35]}
+        camera={{ position: [0, 0.08, 3.25], fov: 38 }}
+        dpr={quality === 'low' ? 1 : [1, 1.25]}
         frameloop={frameMode}
         gl={{ antialias: quality === 'high', powerPreference: 'low-power' }}
       >
@@ -567,7 +542,7 @@ export function CicadaScene() {
       </Canvas>
 
       <div className="fang-scene-label">
-        <span>春秋蝉 · RANK 6 GU</span>
+        <span>春秋蝉 · SPRING AUTUMN CICADA</span>
         <span>DRAG TO ROTATE</span>
       </div>
     </div>
@@ -577,9 +552,9 @@ export function CicadaScene() {
 export function CicadaFallback() {
   return (
     <div className="fang-scene-fallback" role="img" aria-label="Spring Autumn Cicada 3D artifact loading">
-      <span>春秋蝉 · RANK 6 GU</span>
+      <span>春秋蝉 · SPRING AUTUMN CICADA</span>
       <i aria-hidden="true" />
-      <small>TIME PATH · REVEREND INSANITY</small>
+      <small>SPRING AUTUMN CICADA</small>
     </div>
   )
 }
