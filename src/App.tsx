@@ -1,9 +1,11 @@
 import { Header } from './components'
+import { Preloader } from './Preloader'
 import { About, BeyondTheCode, Contact, Education, EngineeringLab, Experience, Hero, SelectedWork, WhatIBuild } from './sections'
 import './styles.css'
 
 function App() {
   return <div className="site">
+    <Preloader />
     <Header />
     <main id="main-content">
       <Hero />
