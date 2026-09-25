@@ -72,7 +72,7 @@ export function SoundToggle() {
         <span className="sound-bar bar-4" />
       </span>
       <span className="sound-label">
-        SOUND <em>{isPlaying ? 'ON' : 'OFF'}</em>
+        MUSIC <em>{isPlaying ? 'ON' : 'OFF'}</em>
       </span>
     </button>
   )

@@ -421,7 +421,7 @@ function FangYuanSceneContent() {
 
       <div className="fang-scene-label">
         <span>方源 · FANG YUAN</span>
-        <span>{modelLoaded ? 'DRAG TO ROTATE' : 'LOADING MODEL'}</span>
+        <span>{modelLoaded ? 'Great Love Immortal Venerable' : 'LOADING MODEL'}</span>
       </div>
     </div>
   )

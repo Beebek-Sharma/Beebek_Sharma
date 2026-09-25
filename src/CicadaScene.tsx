@@ -543,7 +543,6 @@ export function CicadaScene() {
 
       <div className="fang-scene-label">
         <span>春秋蝉 · SPRING AUTUMN CICADA</span>
-        <span>DRAG TO ROTATE</span>
       </div>
     </div>
   )

@@ -38,7 +38,7 @@ export function Header() {
 
   return <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
     <div className="header-inner">
-      <a className="wordmark" href="#top" aria-label="Beebek Sharma home" onClick={() => setOpen(false)}>BEEBEK<span>.</span></a>
+      <a className="wordmark" href="#top" aria-label="Beebek Sharma home" onClick={() => setOpen(false)}>BEEBEK</a>
       <div className="header-right">
         <SoundToggle />
         <button
@@ -57,7 +57,6 @@ export function Header() {
             {items.map(([label, id]) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>{label}</a>)}
           </div>
           <div className="social-links">
-            <span className="nav-note">Based in Nepal</span>
             <a href={links.github} target="_blank" rel="noreferrer">GitHub</a>
             <a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
           </div>
