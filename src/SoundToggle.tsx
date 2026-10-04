@@ -42,16 +42,8 @@ export function SoundToggle() {
           setIsPlaying(true)
         })
         .catch((err) => {
-          console.warn('Audio playback error, trying fallback path:', err)
-          // Fallback if specific file name is required
-          audio.src = encodeURI('/music/aizen theme song.mp3')
-          audio
-            .play()
-            .then(() => setIsPlaying(true))
-            .catch((fallbackErr) => {
-              console.warn('Audio fallback error:', fallbackErr)
-              setIsPlaying(false)
-            })
+          console.warn('Audio playback error:', err)
+          setIsPlaying(false)
         })
     }
   }

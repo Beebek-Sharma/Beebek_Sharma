@@ -6,12 +6,26 @@ import { experience, interests, labGroups, links, projects, techStack } from './
 export function Hero() {
   return <section className="hero section-shell" id="top">
     <div className="hero-copy">
-      <Reveal><span className="eyebrow">01 / Personal systems</span></Reveal>
+      <Reveal className="hero-identity">
+        <div className="hero-avatar-wrap">
+          <img
+            src="/beebek-sharma-avatar.webp"
+            alt="Beebek Sharma"
+            className="hero-avatar-img"
+            width={46}
+            height={46}
+            loading="eager"
+          />
+          <span className="hero-avatar-status" title="Available for opportunities" aria-label="Available for opportunities" />
+        </div>
+        <div className="hero-identity-text">
+          <span className="eyebrow">01 / Personal systems</span>
+        </div>
+      </Reveal>
       <Reveal className="hero-title-wrap"><h1>Beebek<br /><em>Sharma</em></h1></Reveal>
       <Reveal><div className="hero-role">AI <span>/</span> Backend <span>/</span> Full-stack</div></Reveal>
       <Reveal><p className="hero-intro">I build systems, APIs, and intelligent applications that solve practical problems.</p></Reveal>
       <Reveal className="hero-actions"><a className="button button-primary" href="#work">Explore work <span>↘</span></a><a className="button button-quiet" href={links.resume || '#contact'} download={links.resume ? 'Beebek_Sharma.pdf' : undefined}>{links.resume ? 'Resume' : 'Contact'} <span>↗</span></a></Reveal>
-      <Reveal className="hero-meta"><span>Lahan, Nepal</span><span>27°43′N / 85°19′E</span><span>2026</span></Reveal>
     </div>
     <Reveal className="hero-artifact">
       <Suspense fallback={<FangYuanFallback />}>
@@ -77,7 +91,48 @@ export function EngineeringLab() {
 }
 
 export function About() {
-  return <section className="section-shell about-section" id="about"><SectionHeading eyebrow="06 / About" title="Built from the middle layer." /><div className="about-grid"><div className="about-lede">I’m a Computer Science graduate with practical experience across full-stack web development, backend engineering, AI/ML applications, and networking.</div><div className="about-body"><p>Experienced in building web applications using React, JavaScript, Django, Django REST Framework, and Python, with hands-on experience developing REST APIs, authentication systems, database-driven applications, and LAN-based applications.</p><p>Familiar with AI/ML concepts, LLM and RAG architectures, and modern development tools with strong problem-solving skills across Git/GitHub, SQL, Docker, Linux, and collaborative workflows.</p></div></div><div className="stack-list">{techStack.map(([category, technologies]) => <div className="stack-row" key={category}><span>{category}</span><p>{technologies}</p></div>)}</div></section>
+  return <section className="section-shell about-section" id="about">
+    <SectionHeading eyebrow="06 / About" title="Built from the middle layer." />
+    <div className="about-content">
+      <Reveal className="about-portrait-card">
+        <div className="about-portrait-frame">
+          <picture>
+            <source srcSet="/beebek-sharma-portrait.webp" type="image/webp" />
+            <img
+              src="/beebek-sharma-portrait.jpg"
+              alt="Beebek Sharma"
+              className="about-portrait-img"
+              width={380}
+              height={507}
+              loading="lazy"
+            />
+          </picture>
+          <div className="about-portrait-corner corner-tl" aria-hidden="true" />
+          <div className="about-portrait-corner corner-br" aria-hidden="true" />
+        </div>
+        <div className="about-portrait-meta">
+          <div>
+            <strong>Beebek Sharma</strong>
+            <span>Computer Science & Engineering</span>
+          </div>
+
+        </div>
+      </Reveal>
+
+      <div className="about-narrative">
+        <Reveal><div className="about-lede">I’m a Computer Science graduate with practical experience across full-stack web development, backend engineering, AI/ML applications, and networking.</div></Reveal>
+        <Reveal className="about-body">
+          <p>Experienced in building web applications using React, JavaScript, Django, Django REST Framework, and Python, with hands-on experience developing REST APIs, authentication systems, database-driven applications, and LAN-based applications.</p>
+          <p>Familiar with AI/ML concepts, LLM and RAG architectures, and modern development tools with strong problem-solving skills across Git/GitHub, SQL, Docker, Linux, and collaborative workflows.</p>
+        </Reveal>
+        <Reveal className="about-badges">
+          <span className="about-badge"><span>Degree</span> B.Sc. CSIT</span>
+          <span className="about-badge"><span>Focus</span> AI & Backend Systems</span>
+        </Reveal>
+      </div>
+    </div>
+    <div className="stack-list">{techStack.map(([category, technologies]) => <div className="stack-row" key={category}><span>{category}</span><p>{technologies}</p></div>)}</div>
+  </section>
 }
 
 export function BeyondTheCode() {

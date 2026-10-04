@@ -18,7 +18,7 @@ function App() {
       <Education />
       <Contact />
     </main>
-    <footer className="site-footer"><span>© 2026 Beebek Sharma</span><span>Built with React / systems-minded</span><a href="#top">Back to top ↑</a></footer>
+    <footer className="site-footer"><span>Beebek Sharma</span><a href="#top">Back to top ↑</a></footer>
   </div>
 }
 

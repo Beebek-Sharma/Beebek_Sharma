@@ -3,6 +3,7 @@ import { Environment, useGLTF } from '@react-three/drei'
 import { Component, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ErrorInfo, MutableRefObject, PointerEvent as ReactPointerEvent, ReactNode } from 'react'
 import * as THREE from 'three'
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 import { useReducedMotion } from './hooks'
 
 type SceneQuality = 'high' | 'low'
@@ -102,7 +103,7 @@ function StudioEnvironment() {
    ═══════════════════════════════════════════════════════════════════ */
 
 function TemporalSparks({ quality, reduced }: { quality: SceneQuality; reduced: boolean }) {
-  const count = quality === 'low' ? 8 : 16
+  const count = quality === 'low' ? 12 : 20
   const pointsRef = useRef<THREE.Points>(null)
 
   const { positions, basePositions } = useMemo(() => {
@@ -112,7 +113,7 @@ function TemporalSparks({ quality, reduced }: { quality: SceneQuality; reduced: 
       const angle = Math.random() * Math.PI * 2
       const radius = 0.8 + Math.random() * 0.8
       const x = Math.cos(angle) * radius
-      const y = (Math.random() - 0.5) * 1.5
+      const y = (Math.random() - 0.5) * 1.8 + 0.3
       const z = Math.sin(angle) * radius
       pos[i * 3] = x
       pos[i * 3 + 1] = y
@@ -132,7 +133,7 @@ function TemporalSparks({ quality, reduced }: { quality: SceneQuality; reduced: 
 
     for (let i = 0; i < count; i++) {
       const idx = i * 3
-      arr[idx + 1] = ((basePositions[idx + 1] + t * 0.08 + 0.75) % 1.5) - 0.75
+      arr[idx + 1] = ((basePositions[idx + 1] + t * 0.1 + 0.6) % 1.8) - 0.6 + 0.3
       arr[idx] = basePositions[idx] + Math.sin(t * 0.8 + i) * 0.02
     }
     posAttr.needsUpdate = true
@@ -174,25 +175,26 @@ function TemporalSparks({ quality, reduced }: { quality: SceneQuality; reduced: 
 
 /* ═══════════════════════════════════════════════════════════════════
    AUTHENTIC FANG YUAN 3D MODEL
-   Centered at portrait eye-level with softened skin normals
-   matching the original collectible photograph.
+   Auto-centered, scale-calibrated, and MeshoptDecoder enabled
    ═══════════════════════════════════════════════════════════════════ */
 
 function FangYuanModel({ onLoaded }: { onLoaded: () => void }) {
-  const { scene } = useGLTF(fangYuanModelUrl)
+  const { scene } = useGLTF(fangYuanModelUrl, true, true, (loader) => {
+    loader.setMeshoptDecoder(MeshoptDecoder)
+  })
 
   const presentation = useMemo(() => {
     const model = scene.clone(true)
     const bounds = new THREE.Box3().setFromObject(model)
     const center = bounds.getCenter(new THREE.Vector3())
-    // 1.30 scale perfectly frames the entire seated figure, hair, robes, and pedestal base with clear breathing room
-    const modelScale = 1.30
+    // 1.08 scale cleanly frames the seated figure, throne, and base with natural margin
+    const modelScale = 1.08
 
     return {
       model,
       position: [
         -center.x * modelScale,
-        -center.y * modelScale - 0.04,
+        -center.y * modelScale,
         -center.z * modelScale,
       ] as [number, number, number],
       scale: [modelScale, modelScale, modelScale] as [number, number, number],
@@ -203,22 +205,22 @@ function FangYuanModel({ onLoaded }: { onLoaded: () => void }) {
     presentation.model.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const mesh = child as THREE.Mesh
+        mesh.castShadow = true
+        mesh.receiveShadow = true
         if (mesh.material) {
           const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
           mats.forEach((mat) => {
             if ((mat as THREE.MeshStandardMaterial).isMeshStandardMaterial) {
               const stdMat = mat as THREE.MeshStandardMaterial
-              // Soften normal scale so skin does not show 3D scan bumps or seams
               if (stdMat.normalMap) {
                 stdMat.normalScale.set(0.65, 0.65)
               }
               if (stdMat.map) {
                 stdMat.map.colorSpace = THREE.SRGBColorSpace
               }
-              // Soft velvety matte porcelain skin finish
-              stdMat.roughness = 0.82
-              stdMat.metalness = 0.08
-              stdMat.envMapIntensity = 0.5
+              stdMat.roughness = 0.8
+              stdMat.metalness = 0.05
+              stdMat.envMapIntensity = 0.6
               stdMat.needsUpdate = true
             }
           })
@@ -235,9 +237,13 @@ function FangYuanModel({ onLoaded }: { onLoaded: () => void }) {
   )
 }
 
+useGLTF.preload(fangYuanModelUrl, true, true, (loader) => {
+  loader.setMeshoptDecoder(MeshoptDecoder)
+})
+
 function ModelLoadingPlaceholder() {
   return (
-    <mesh position={[0, 0, 0]}>
+    <mesh position={[0, 0.2, 0]}>
       <sphereGeometry args={[0.3, 16, 16]} />
       <meshStandardMaterial color="#174d3d" metalness={0.65} roughness={0.34} transparent opacity={0.35} />
     </mesh>
@@ -246,8 +252,7 @@ function ModelLoadingPlaceholder() {
 
 /* ═══════════════════════════════════════════════════════════════════
    ASSEMBLED 3D FANG YUAN SHOWCASE
-   Cleaned: No artificial lower board, no wireframe rings.
-   Pure focus on the authentic collectible statue and face.
+   Focus on the authentic collectible statue and face.
    ═══════════════════════════════════════════════════════════════════ */
 
 function FangYuanShowcaseGeometry({
@@ -261,25 +266,48 @@ function FangYuanShowcaseGeometry({
   motion: MutableRefObject<Motion>
   onModelLoaded: () => void
 }) {
-  const group = useRef<THREE.Group>(null)
+  const floatGroup = useRef<THREE.Group>(null)
+  const rotateGroup = useRef<THREE.Group>(null)
 
-  useFrame((_, delta) => {
-    if (!group.current) return
+  useFrame((state, delta) => {
+    if (!floatGroup.current || !rotateGroup.current) return
     const m = motion.current
+
+    // Auto-rotation around Y axis when not being dragged
     if (!m.dragging && !reduced) {
-      m.targetY += delta * 0.12
+      m.targetY += delta * 0.22
     }
-    const factor = Math.min(delta * 10, 1)
-    m.x += (m.targetX - m.x) * factor
-    m.y += (m.targetY - m.y) * factor
-    group.current.rotation.set(m.x, m.y, 0)
+
+    // Smooth physics damping
+    const dampSpeed = quality === 'low' ? 8 : 10
+    m.x = THREE.MathUtils.damp(m.x, m.targetX, dampSpeed, delta)
+    m.y = THREE.MathUtils.damp(m.y, m.targetY, dampSpeed, delta)
+    rotateGroup.current.rotation.set(m.x, m.y, 0)
+
+    // Smooth celestial levitation & breathing motion
+    if (!reduced) {
+      const t = state.clock.getElapsedTime()
+      const floatY = Math.sin(t * 1.15) * 0.042
+      const driftX = Math.sin(t * 0.72) * 0.016
+      const driftZ = Math.cos(t * 0.88) * 0.012
+      const tiltX = Math.cos(t * 1.15) * 0.008
+      const tiltZ = Math.sin(t * 0.95) * 0.014
+
+      floatGroup.current.position.set(driftX, floatY, driftZ)
+      floatGroup.current.rotation.set(tiltX, 0, tiltZ)
+    } else {
+      floatGroup.current.position.set(0, 0, 0)
+      floatGroup.current.rotation.set(0, 0, 0)
+    }
   })
 
   return (
-    <group ref={group} rotation={[0.02, -0.15, 0]}>
-      <Suspense fallback={<ModelLoadingPlaceholder />}>
-        <FangYuanModel onLoaded={onModelLoaded} />
-      </Suspense>
+    <group ref={floatGroup}>
+      <group ref={rotateGroup} rotation={[0.02, 0, 0]}>
+        <Suspense fallback={<ModelLoadingPlaceholder />}>
+          <FangYuanModel onLoaded={onModelLoaded} />
+        </Suspense>
+      </group>
       <TemporalSparks quality={quality} reduced={reduced} />
     </group>
   )
@@ -292,9 +320,9 @@ function FangYuanSceneContent() {
   const invalidateRef = useRef<() => void>(() => undefined)
   const motion = useRef<Motion>({
     x: 0.02,
-    y: -0.15,
+    y: 0,
     targetX: 0.02,
-    targetY: -0.15,
+    targetY: 0,
     dragging: false,
     pointerId: null,
     lastX: 0,
@@ -363,13 +391,15 @@ function FangYuanSceneContent() {
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
     >
+      <div className="fang-scene-grid" aria-hidden="true" />
       <Canvas
-        camera={{ position: [0, 0.0, 2.9], fov: 36 }}
-        dpr={quality === 'low' ? 1 : [1, 1.25]}
+        camera={{ position: [0, 0.2, 3.2], fov: 38 }}
+        dpr={quality === 'low' ? 1 : [1, 1.5]}
         frameloop={frameMode}
+        shadows
         gl={{
-          antialias: quality === 'high',
-          powerPreference: 'low-power',
+          antialias: true,
+          powerPreference: 'high-performance',
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.15,
         }}
@@ -379,34 +409,37 @@ function FangYuanSceneContent() {
         {/* 1. Procedural Soft Studio Environment */}
         <StudioEnvironment />
 
-        {/* 2. Warm Ambient Light */}
-        <ambientLight intensity={0.95} color="#38322b" />
+        {/* 2. Warm Portrait Ambient Light */}
+        <ambientLight intensity={0.85} color="#353028" />
 
-        {/* 3. Primary Key Light (Soft warm light illuminating face and body) */}
+        {/* 3. Primary Key Portrait Light */}
         <directionalLight
-          position={[1.0, 1.5, 2.4]}
+          position={[1.5, 2.8, 3.0]}
           intensity={2.2}
           color="#fff5eb"
+          castShadow
+          shadow-mapSize={[1024, 1024]}
+          shadow-bias={-0.0001}
         />
 
-        {/* 4. Front Fill Light */}
+        {/* 4. Eye-Level Front-Left Fill Light */}
         <directionalLight
-          position={[-1.0, 0.5, 2.0]}
-          intensity={1.3}
+          position={[-1.5, 1.2, 2.5]}
+          intensity={1.2}
           color="#fef3c7"
         />
 
-        {/* 5. Delicate Overhead Hair & Shoulder Highlight */}
+        {/* 5. Overhead Hair & Shoulder Highlight */}
         <directionalLight
-          position={[0.2, 2.6, -0.6]}
-          intensity={1.5}
+          position={[0, 3.2, 0]}
+          intensity={1.4}
           color="#ffffff"
         />
 
-        {/* 6. Subtle Base Illumination for the stone pedestal and robes */}
+        {/* 6. Subtle Base Under-Fill */}
         <pointLight
-          position={[0, -0.65, 1.6]}
-          intensity={1.0}
+          position={[0, -0.8, 1.5]}
+          intensity={0.8}
           color="#e2d9c8"
           distance={3.5}
         />
@@ -421,7 +454,7 @@ function FangYuanSceneContent() {
 
       <div className="fang-scene-label">
         <span>方源 · FANG YUAN</span>
-        <span>{modelLoaded ? 'Great Love Immortal Venerable' : 'LOADING MODEL'}</span>
+        <span>{modelLoaded ? 'DRAG TO ROTATE' : 'LOADING MODEL'}</span>
       </div>
     </div>
   )
