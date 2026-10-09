@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beebek Sharma - Resume</title>
+  <meta name="description" content="Resume of Beebek Sharma — Computer Science graduate, Full-Stack, Backend, and AI Engineer.">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+  <style>
+    :root {
+      --bg-page: #080c0a;
+      --paper-bg: #ffffff;
+      --paper-text: #111111;
+      --paper-muted: #333333;
+      --paper-link: #0f4c3a;
+      --border-line: #222222;
+      --bar-bg: rgba(10, 16, 13, 0.88);
+      --bar-border: rgba(91, 156, 130, 0.25);
+      --accent: #5b9c82;
+      --accent-hover: #7fc3a9;
+    }
+
+    [data-theme="light"] {
+      --bg-page: #edf2ef;
+      --bar-bg: rgba(248, 250, 248, 0.94);
+      --bar-border: rgba(23, 77, 61, 0.18);
+      --accent: #17634e;
+      --accent-hover: #1b7a60;
+    }
+
+    [data-theme="light"] .toolbar-link {
+      color: #2b3832;
+      border-color: rgba(23, 77, 61, 0.2);
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    [data-theme="light"] .toolbar-link:hover {
+      color: #0c1410;
+      background: rgba(23, 77, 61, 0.1);
+      border-color: var(--accent);
+    }
+
+    [data-theme="light"] .toolbar-button-primary {
+      background: var(--accent);
+      color: #ffffff !important;
+      border-color: var(--accent) !important;
+    }
+
+    [data-theme="light"] .toolbar-title {
+      color: #55665e;
+    }
+
+    [data-theme="light"] .resume-sheet {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    /* 3-Way Theme Segmented Control */
+    .theme-toggle-group {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 2px;
+    }
+
+    [data-theme="light"] .theme-toggle-group {
+      background: rgba(23, 77, 61, 0.06);
+      border-color: rgba(23, 77, 61, 0.18);
+    }
+
+    .theme-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 24px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #9ca3af;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    [data-theme="light"] .theme-btn {
+      color: #55665e;
+    }
+
+    .theme-btn:hover {
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .theme-btn:hover {
+      color: #101614;
+    }
+
+    .theme-btn.is-active {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    [data-theme="light"] .theme-btn.is-active {
+      background: #ffffff;
+      color: var(--accent);
+      border-color: rgba(23, 77, 61, 0.3);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--paper-text);
+      font-family: "Times New Roman", Times, "Cambria", Georgia, serif;
+      line-height: 1.42;
+      font-size: 14.5px;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 60px;
+    }
+
+    /* Top Action Bar (Screen Only) */
+    .top-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bar-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--bar-border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .toolbar-left, .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .toolbar-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      transition: all 0.2s ease;
+    }
+
+    .toolbar-link:hover {
+      color: #ffffff;
+      background: rgba(91, 156, 130, 0.2);
+      border-color: var(--accent);
+    }
+
+    .toolbar-button-primary {
+      background: var(--accent);
+      color: #050807 !important;
+      border-color: var(--accent) !important;
+      font-weight: 600;
+    }
+
+    .toolbar-button-primary:hover {
+      background: var(--accent-hover) !important;
+    }
+
+    .toolbar-title {
+      color: #9ca3af;
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 600px) {
+      .toolbar-title { display: none; }
+      .top-toolbar { padding: 0.6rem 1rem; }
+      .toolbar-link { font-size: 0.75rem; padding: 0.35rem 0.65rem; }
+    }
+
+    /* Resume Document Sheet */
+    .resume-wrapper {
+      max-width: 820px;
+      margin: 32px auto 0;
+      padding: 0 16px;
+    }
+
+    .resume-sheet {
+      background: var(--paper-bg);
+      color: var(--paper-text);
+      padding: 50px 58px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+    }
+
+    /* Resume Content Styling */
+    h1 {
+      font-size: 26px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 4px;
+      color: #000;
+    }
+
+    h2 {
+      font-size: 14.5px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 4px;
+      color: #000;
+    }
+
+    hr {
+      border: none;
+      border-top: 1.2px solid var(--border-line);
+      margin: 3px 0 9px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .header .tagline {
+      font-size: 13.5px;
+      font-style: italic;
+      color: var(--paper-muted);
+      margin-bottom: 4px;
+    }
+
+    .header .contact {
+      font-size: 13.5px;
+      margin: 3px 0;
+    }
+
+    .header .links {
+      font-size: 13.5px;
+      margin-top: 3px;
+    }
+
+    .header a {
+      color: var(--paper-link);
+      text-decoration: none;
+      margin: 0 2px;
+    }
+
+    .header a:hover {
+      text-decoration: underline;
+    }
+
+    .section {
+      margin-bottom: 14px;
+    }
+
+    .summary-text {
+      text-align: justify;
+      text-justify: inter-word;
+      line-height: 1.44;
+      color: #1a1a1a;
+    }
+
+    .skill-category {
+      margin-bottom: 4px;
+      line-height: 1.42;
+    }
+
+    .skill-category strong {
+      font-weight: bold;
+      color: #000;
+    }
+
+    .entry {
+      margin-bottom: 11px;
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-weight: bold;
+      color: #000;
+    }
+
+    .entry-header span:last-child {
+      font-weight: normal;
+      font-style: italic;
+    }
+
+    .entry-sub {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-style: italic;
+      color: var(--paper-muted);
+      margin-bottom: 4px;
+    }
+
+    .entry-sub span:last-child {
+      font-style: italic;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+
+    .project-title {
+      font-weight: bold;
+      color: #000;
+    }
+
+    .project-tech {
+      font-weight: normal;
+      font-style: italic;
+      color: var(--paper-muted);
+    }
+
+    .project-link {
+      color: var(--paper-link);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 13.5px;
+    }
+
+    .project-link:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      margin: 3px 0 6px 20px;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 3px;
+      line-height: 1.4;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    /* Print Stylesheet */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .no-print, .top-toolbar {
+        display: none !important;
+      }
+
+      .resume-wrapper {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .resume-sheet {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 24px 32px !important;
+        margin: 0 !important;
+      }
+
+      a {
+        color: #000000 !important;
+        text-decoration: none !important;
+      }
+
+      hr {
+        border-top: 1px solid #000000 !important;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .resume-sheet {
+        padding: 28px 20px;
+      }
+      .entry-header, .entry-sub, .project-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .entry-header span:last-child, .entry-sub span:last-child {
+        margin-top: 1px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Action Bar (Screen View Only) -->
+  <div class="top-toolbar no-print">
+    <div class="toolbar-left">
+      <a href="/" class="toolbar-link" title="Return to portfolio home">
+        <span>←</span>
+        <span>Portfolio</span>
+      </a>
+      <span class="toolbar-title">Beebek Sharma · Resume</span>
+    </div>
+    <div class="toolbar-right">
+      <div class="theme-toggle-group" role="radiogroup" aria-label="Select theme">
+        <button type="button" class="theme-btn" id="theme-system" onclick="setResumeTheme('system')" title="System theme (Auto)" aria-label="System theme">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </button>
+        <button type="button" class="theme-btn" id="theme-dark" onclick="setResumeTheme('dark')" title="Dark theme" aria-label="Dark theme">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button type="button" class="theme-btn" id="theme-light" onclick="setResumeTheme('light')" title="Light theme" aria-label="Light theme">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+      </div>
+      <a href="/Beebek_Sharma.pdf" download="Beebek_Sharma.pdf" class="toolbar-link toolbar-button-primary">
+        <span>↓</span>
+        <span>Download PDF</span>
+      </a>
+      <button type="button" onclick="window.print()" class="toolbar-link" style="cursor: pointer;">
+        <span>⎙</span>
+        <span>Print</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Document Sheet -->
+  <div class="resume-wrapper">
+    <div class="resume-sheet">
+
+      <!-- Header -->
+      <div class="header">
+        <h1>BIBEK SHARMA</h1>
+        <p class="tagline">Computer Science Graduate · AI / LLM Applications · Backend Engineering · Full-Stack</p>
+        <p class="contact">
+          Lahan, Nepal &nbsp;|&nbsp;
+          <a href="tel:+9779764186637">+977-9764186637</a> &nbsp;|&nbsp;
+          <a href="mailto:bibeksharma976@gmail.com">bibeksharma976@gmail.com</a>
+        </p>
+        <p class="links">
+          <a href="https://bibekksharma.com.np" target="_blank" rel="noreferrer">Portfolio</a> &nbsp;|&nbsp;
+          <a href="https://github.com/Beebek-Sharma" target="_blank" rel="noreferrer">GitHub</a> &nbsp;|&nbsp;
+          <a href="https://www.linkedin.com/in/beebek-sharma-954686331/" target="_blank" rel="noreferrer">LinkedIn</a> &nbsp;|&nbsp;
+          <a href="https://medium.com/@bibehsharma777" target="_blank" rel="noreferrer">Medium</a>
+        </p>
+      </div>
+
+      <!-- Professional Summary -->
+      <div class="section">
+        <h2>PROFESSIONAL SUMMARY</h2>
+        <hr>
+        <p class="summary-text">
+          Computer Science graduate with practical experience across full-stack web development, backend engineering, AI/ML applications and networking. Experienced in building web applications using React, JavaScript, Django, Django REST Framework, and Python, with hands-on experience developing REST APIs, authentication systems, database-driven applications, and LAN-based applications. Familiar with AI/ML concepts, LLM and RAG architectures and modern development tools. Strong problem-solving and debugging skills with experience using Git/GitHub, SQL, Docker, Linux, and collaborative software development workflows.
+        </p>
+      </div>
+
+      <!-- Technical Skills -->
+      <div class="section">
+        <h2>TECHNICAL SKILLS</h2>
+        <hr>
+        <div class="skill-category">
+          <strong>Programming Languages:</strong> Python, JavaScript, C/C++, SQL
+        </div>
+        <div class="skill-category">
+          <strong>Frontend Development:</strong> HTML, CSS, JavaScript, React.js, Vite, Tailwind CSS, Responsive Web Design
+        </div>
+        <div class="skill-category">
+          <strong>Backend Development:</strong> Django, Django REST Framework, FastAPI, Flask, REST APIs, Authentication, CRUD Operations, Flask-SocketIO
+        </div>
+        <div class="skill-category">
+          <strong>Databases:</strong> PostgreSQL, MySQL, SQLite, Vector Databases
+        </div>
+        <div class="skill-category">
+          <strong>AI / LLM Technologies:</strong> LLMs, RAG, LangChain, Azure OpenAI, NLP, Vector Databases
+        </div>
+        <div class="skill-category">
+          <strong>Networking &amp; IT Support:</strong> TCP/IP, LAN/WAN, Wi-Fi Configuration, Router Configuration, Hardware and Software Troubleshooting, WebRTC
+        </div>
+        <div class="skill-category">
+          <strong>Tools &amp; Development:</strong> Git, GitHub, Docker, Linux, Windows, REST API Testing, Virtual Environments, CI/CD
+        </div>
+      </div>
+
+      <!-- Professional Experience -->
+      <div class="section">
+        <h2>PROFESSIONAL EXPERIENCE</h2>
+        <hr>
+        <div class="entry">
+          <div class="entry-header">
+            <span>Lunar I.T. Solution Pvt. Ltd.</span>
+            <span>Itahari, Nepal</span>
+          </div>
+          <div class="entry-sub">
+            <span>Django Developer Intern</span>
+            <span>Nov 2025 – Feb 2026</span>
+          </div>
+          <ul>
+            <li>Developed backend modules and RESTful APIs using Django and Django REST Framework while maintaining reliable and maintainable application functionality.</li>
+            <li>Worked with relational databases, development environments, and Linux-based systems to support application development and deployment.</li>
+            <li>Diagnosed and resolved software defects through structured debugging and systematic troubleshooting techniques.</li>
+            <li>Collaborated with developers using Git workflows and technical documentation to complete development tasks and project milestones efficiently.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Selected Projects -->
+      <div class="section">
+        <h2>SELECTED PROJECTS</h2>
+        <hr>
+
+        <div class="entry">
+          <div class="project-header">
+            <div>
+              <span class="project-title">MyDM</span>
+              <span class="project-tech"> — JavaScript, Chrome MV3, Python, Web APIs</span>
+            </div>
+            <a href="https://github.com/Beebek-Sharma/My_DM" target="_blank" rel="noreferrer" class="project-link">[Code]</a>
+          </div>
+          <ul>
+            <li>Engineered a high-performance browser-native download manager for Chrome and Edge (Manifest V3) with a deterministic 12-state lifecycle machine and concurrency queue management.</li>
+            <li>Implemented true pause and resume backed by HTTP Range headers, bounded exponential backoff with randomized jitter, and RFC 5987/6266 filename sanitization.</li>
+            <li>Built an on-page media stream detector for HLS (.m3u8) and DASH (.mpd) manifests and an optional Python native messaging host for high-speed segmented chunk assembly.</li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="project-header">
+            <div>
+              <span class="project-title">LAN Share</span>
+              <span class="project-tech"> — Python, Flask-SocketIO, WebRTC</span>
+            </div>
+            <a href="https://github.com/Beebek-Sharma/lan-share" target="_blank" rel="noreferrer" class="project-link">[Code]</a>
+          </div>
+          <ul>
+            <li>Developed a LAN-based peer-to-peer file-sharing application enabling real-time file transfer without relying on cloud infrastructure.</li>
+            <li>Implemented QR-based device pairing, local signaling services, and cross-platform networking using WebRTC and Flask-SocketIO.</li>
+            <li>Designed the application around local network communication and troubleshot connectivity and file-transfer reliability issues.</li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="project-header">
+            <div>
+              <span class="project-title">Institute Management System</span>
+              <span class="project-tech"> — React, Django REST Framework, PostgreSQL</span>
+            </div>
+            <a href="https://github.com/Beebek-Sharma/Institute_management_system.git" target="_blank" rel="noreferrer" class="project-link">[Code]</a>
+          </div>
+          <ul>
+            <li>Developed a full-stack institute management platform using React for the frontend and Django REST Framework for the backend.</li>
+            <li>Implemented features including course creation, instructor registration, student registration, enrollment, attendance, certificate generation, and fee management.</li>
+            <li>Integrated REST APIs with the frontend and worked with structured database records to support application workflows.</li>
+          </ul>
+        </div>
+
+        <div class="entry">
+          <div class="project-header">
+            <div>
+              <span class="project-title">Expense Tracker API</span>
+              <span class="project-tech"> — Django REST Framework, PostgreSQL</span>
+            </div>
+            <a href="https://github.com/Beebek-Sharma/Expense-Tracker-API" target="_blank" rel="noreferrer" class="project-link">[Code]</a>
+          </div>
+          <ul>
+            <li>Developed a secure REST API for personal expense management using Django REST Framework with token authentication and user authorization.</li>
+            <li>Implemented CRUD operations, user-specific data access, currency conversion, and budget monitoring functionality.</li>
+            <li>Used Git-based development workflows, database migrations, API testing, and systematic debugging to improve application reliability.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="section">
+        <h2>EDUCATION</h2>
+        <hr>
+        <div class="entry">
+          <div class="entry-header">
+            <span>Tribhuvan University, Central Campus of Technology</span>
+            <span>Dharan, Nepal</span>
+          </div>
+          <div class="entry-sub">
+            <span>Bachelor of Science in Computer Science and Information Technology (B.Sc. CSIT)</span>
+            <span>2022 – 2026</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function updateThemeUI(pref) {
+      document.querySelectorAll('.theme-btn').forEach(function (b) { b.classList.remove('is-active'); });
+      var btn = document.getElementById('theme-' + pref);
+      if (btn) btn.classList.add('is-active');
+    }
+    function setResumeTheme(pref) {
+      var media = window.matchMedia('(prefers-color-scheme: dark)');
+      var resolved = pref === 'system' ? (media.matches ? 'dark' : 'light') : pref;
+      document.documentElement.setAttribute('data-theme', resolved);
+      document.documentElement.setAttribute('data-theme-preference', pref);
+      try { localStorage.setItem('beebek-theme', pref); } catch (e) {}
+      updateThemeUI(pref);
+    }
+    (function () {
+      var pref = localStorage.getItem('beebek-theme') || 'system';
+      setResumeTheme(pref);
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () {
+        var currentPref = localStorage.getItem('beebek-theme') || 'system';
+        if (currentPref === 'system') setResumeTheme('system');
+      });
+    })();
+  </script>
+</body>
+</html>

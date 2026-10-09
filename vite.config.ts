@@ -8,4 +8,19 @@ export default defineConfig({
       ignored: ['**/public/*.pdf', '**/*.pdf'],
     },
   },
+  resolve: {
+    dedupe: ['react', 'react-dom'],
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'motion/react'],
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        resume: 'resume.html',
+        tools: 'tools.html',
+      },
+    },
+  },
 })

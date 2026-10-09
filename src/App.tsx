@@ -4,22 +4,24 @@ import { About, BeyondTheCode, Contact, Education, EngineeringLab, Experience, H
 import './styles.css'
 
 function App() {
-  return <div className="site">
-    <Preloader />
-    <Header />
-    <main id="main-content">
-      <Hero />
-      <WhatIBuild />
-      <SelectedWork />
-      <Experience />
-      <EngineeringLab />
-      <About />
-      <BeyondTheCode />
-      <Education />
-      <Contact />
-    </main>
-    <footer className="site-footer"><span>Beebek Sharma</span><a href="#top">Back to top ↑</a></footer>
-  </div>
+  return (
+    <div className="site">
+      <Preloader />
+      <Header />
+      <main id="main-content">
+        <Hero />
+        <WhatIBuild />
+        <SelectedWork />
+        <Experience />
+        <EngineeringLab />
+        <About />
+        <BeyondTheCode />
+        <Education />
+        <Contact />
+      </main>
+      <footer className="site-footer"><span>Beebek Sharma</span><a href="#top">Back to top ↑</a></footer>
+    </div>
+  )
 }
 
 export default App

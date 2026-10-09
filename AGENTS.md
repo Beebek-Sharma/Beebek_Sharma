@@ -1929,3 +1929,15 @@ At every step, prioritize:
 
 Never sacrifice usability or performance merely to preserve a desktop visual effect.
 
+---
+
+# 37. Git & Repository Hygiene
+
+When staging, committing, and pushing code:
+
+* **Never commit prompt files** (e.g. `*prompt*.md`, specification prompt documents).
+* **Never commit scratch or temporary scripts** (e.g. `scripts/capture.*`, one-off scrape/download scripts).
+* **Never commit temporary test artifacts, scratchpad notes, or local dump files.**
+* **Only stage and commit production codebase files, essential assets, and configuration.**
+* **Always verify `git status` explicitly before committing** to ensure no auxiliary, temporary, or unneeded files are staged.
+

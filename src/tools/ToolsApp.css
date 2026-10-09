@@ -1,0 +1,508 @@
+/* Tools Dashboard & Hub Stylesheet */
+.tools-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Manrope', -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Sticky Tools Header */
+.tools-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--header-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.85rem 2rem;
+}
+
+.tools-header-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.tools-brand-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.back-home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--text);
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  transition: all 0.2s ease;
+}
+
+.back-home-link:hover {
+  border-color: var(--accent-bright);
+  color: var(--accent-bright);
+  transform: translateX(-2px);
+}
+
+.tools-title-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tools-title-text {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+
+.privacy-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+
+.tools-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.clear-session-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-session-btn:hover {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* Main Container */
+.tools-main-container {
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 3rem 2rem 6rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Hero Section */
+.tools-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 780px;
+}
+
+.tools-hero h1 {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--text);
+  margin: 0;
+}
+
+.tools-hero p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
+.privacy-pillars-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.privacy-pillar-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--accent-bright);
+  background: rgba(91, 156, 130, 0.08);
+  border: 1px solid rgba(91, 156, 130, 0.25);
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+}
+
+/* Category Filter Bar */
+.category-filter-bar {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.75rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.category-tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.category-tab-btn:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.category-tab-btn.is-active {
+  background: var(--surface-2);
+  color: var(--accent-bright);
+  border-color: var(--border);
+  font-weight: 600;
+}
+
+/* Tool Cards Grid */
+.tools-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .tools-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tool-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.tool-card:hover {
+  border-color: var(--accent-bright);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+}
+
+.tool-card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.tool-card-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(91, 156, 130, 0.1);
+  border: 1px solid rgba(91, 156, 130, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-bright);
+}
+
+.tool-card-title {
+  font-size: 1.28rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.tool-card-desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+
+.tool-card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.tool-card-category {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--faint);
+  text-transform: uppercase;
+}
+
+.tool-card-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--accent-bright);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* Active Tool Workspace Navigation Bar */
+.workspace-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  gap: 1rem;
+}
+
+.back-to-dashboard-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-to-dashboard-btn:hover {
+  border-color: var(--accent-bright);
+  color: var(--accent-bright);
+  transform: translateX(-3px);
+}
+
+/* Privacy Guarantee Section */
+.privacy-guarantee-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.privacy-guarantee-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.privacy-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.privacy-feature-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.privacy-feature-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+
+.privacy-feature-desc {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .tools-header {
+    padding: 0.75rem 1rem;
+  }
+  .tools-main-container {
+    padding: 2rem 1.25rem 4rem;
+  }
+  .tools-title-badge .privacy-pill {
+    display: none;
+  }
+}
+
+/* Universal Button Standards for Tools Suite */
+.primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: var(--accent) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--accent) !important;
+  padding: 0.65rem 1.35rem;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(31, 111, 85, 0.25);
+}
+
+.primary-btn:hover:not(:disabled) {
+  background: #205c48 !important;
+  border-color: #205c48 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(31, 111, 85, 0.35);
+}
+
+.primary-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--surface-2, rgba(23, 77, 61, 0.15));
+  color: var(--text) !important;
+  border: 1px solid var(--border);
+  padding: 0.65rem 1.15rem;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.secondary-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--surface-3, rgba(23, 77, 61, 0.28));
+  color: var(--text) !important;
+  transform: translateY(-1px);
+}
+
+.secondary-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.clear-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-all-btn:hover {
+  color: #ef4444 !important;
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* Ensure any .button used inside tools has rich contrast */
+.tools-page .button {
+  background: var(--surface-2, rgba(23, 77, 61, 0.15));
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.tools-page .button:hover {
+  background: var(--surface-3, rgba(23, 77, 61, 0.28));
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.tools-page .button.button-primary {
+  background: var(--accent) !important;
+  color: #ffffff !important;
+  border-color: var(--accent) !important;
+}
+
+.tools-page .button.button-primary:hover {
+  background: #205c48 !important;
+  color: #ffffff !important;
+}
+
+/* Light Mode Overrides for Tools */
+[data-theme="light"] .secondary-btn,
+[data-theme="light"] .tools-page .button {
+  background: #ffffff;
+  color: #111a15 !important;
+  border-color: rgba(23, 77, 61, 0.2);
+}
+
+[data-theme="light"] .secondary-btn:hover,
+[data-theme="light"] .tools-page .button:hover {
+  background: rgba(23, 77, 61, 0.08);
+  border-color: var(--accent);
+  color: #0c1410 !important;
+}

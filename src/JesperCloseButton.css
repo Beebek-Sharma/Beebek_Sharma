@@ -1,0 +1,173 @@
+/* Jesper Landberg Signature Close Button */
+.jesper-close-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  z-index: 100;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+.jesper-btn-halo {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.3) 0%, transparent 70%);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  transform: scale(0.85);
+}
+
+.jesper-close-btn:hover .jesper-btn-halo {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.jesper-btn-disc {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #060c0a;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hollow ring invert transition */
+.jesper-close-btn:hover .jesper-btn-disc,
+.jesper-close-btn.is-hovered .jesper-btn-disc {
+  background: rgba(6, 12, 10, 0.35);
+  border-color: #4ade80;
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.35), 0 8px 24px rgba(0, 0, 0, 0.7);
+}
+
+.jesper-close-btn:active .jesper-btn-disc {
+  transform: scale(0.92);
+}
+
+/* Kinetic Cross Geometry */
+.jesper-cross-mark {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.cross-arm {
+  position: absolute;
+  width: 16px;
+  height: 1.8px;
+  background-color: #ffffff;
+  border-radius: 1px;
+  transform-origin: center center;
+  transition: background-color 0.25s ease;
+}
+
+.jesper-close-btn:hover .cross-arm {
+  background-color: #4ade80;
+}
+
+.arm-diag-1 {
+  transform: rotate(45deg);
+}
+
+.arm-diag-2 {
+  transform: rotate(-45deg);
+}
+
+/* Diagonal 1 stroke swap: shoots along 45deg with stretch, lands from opposite */
+.jesper-cross-mark.is-animating .arm-diag-1 {
+  animation: jesper-stroke-swap-1 0.46s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Diagonal 2 stroke swap: staggered by MARK_LEAD delay */
+.jesper-cross-mark.is-animating .arm-diag-2 {
+  animation: jesper-stroke-swap-2 0.46s cubic-bezier(0.25, 1, 0.5, 1) 0.08s forwards;
+}
+
+@keyframes jesper-stroke-swap-1 {
+  0% {
+    transform: rotate(45deg) scaleX(1) translateX(0);
+  }
+  38% {
+    transform: rotate(45deg) scaleX(1.45) translateX(150%);
+  }
+  39% {
+    transform: rotate(45deg) scaleX(1.45) translateX(-150%);
+  }
+  100% {
+    transform: rotate(45deg) scaleX(1) translateX(0);
+  }
+}
+
+@keyframes jesper-stroke-swap-2 {
+  0% {
+    transform: rotate(-45deg) scaleX(1) translateX(0);
+  }
+  38% {
+    transform: rotate(-45deg) scaleX(1.45) translateX(150%);
+  }
+  39% {
+    transform: rotate(-45deg) scaleX(1.45) translateX(-150%);
+  }
+  100% {
+    transform: rotate(-45deg) scaleX(1) translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jesper-close-btn {
+    transition: none !important;
+    transform: none !important;
+  }
+  .jesper-cross-mark.is-animating .arm-diag-1,
+  .jesper-cross-mark.is-animating .arm-diag-2 {
+    animation: none !important;
+  }
+}
+
+/* ── Light Mode Specific Polish for JesperCloseButton ── */
+[data-theme="light"] .jesper-btn-halo {
+  background: radial-gradient(circle, rgba(20, 99, 77, 0.22) 0%, transparent 70%);
+}
+
+[data-theme="light"] .jesper-btn-disc {
+  background: #ffffff;
+  border-color: rgba(23, 77, 61, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .jesper-close-btn:hover .jesper-btn-disc,
+[data-theme="light"] .jesper-close-btn.is-hovered .jesper-btn-disc {
+  background: rgba(23, 77, 61, 0.08);
+  border-color: #14634d;
+  box-shadow: 0 0 16px rgba(20, 99, 77, 0.2), 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .cross-arm {
+  background-color: #111815;
+}
+
+[data-theme="light"] .jesper-close-btn:hover .cross-arm {
+  background-color: #14634d;
+}

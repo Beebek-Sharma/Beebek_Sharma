@@ -1,0 +1,226 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" style="background:#080d0b; font-family:'JetBrains Mono', 'Fira Code', 'Segoe UI', monospace;">
+  <defs>
+    <linearGradient id="grid-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.08"/>
+      <stop offset="50%" stop-color="#059669" stop-opacity="0.02"/>
+      <stop offset="100%" stop-color="#047857" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="card-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#121e17" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0a120e" stop-opacity="0.98"/>
+    </linearGradient>
+    <linearGradient id="emerald-line" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#10b981" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="tech-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#13241a" stroke-width="1" stroke-opacity="0.55"/>
+      <circle cx="0" cy="0" r="1.5" fill="#10b981" fill-opacity="0.25"/>
+    </pattern>
+    <filter id="emerald-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="1920" height="1080" fill="#070c09"/>
+  <rect width="1920" height="1080" fill="url(#tech-grid)"/>
+  <rect width="1920" height="1080" fill="url(#grid-glow)"/>
+
+  <!-- Top System Header Bar -->
+  <rect x="80" y="50" width="1760" height="64" rx="8" fill="#0d1812" stroke="#1a3325" stroke-width="1.5"/>
+  <circle cx="114" cy="82" r="5" fill="#10b981" filter="url(#emerald-glow)"/>
+  <text x="135" y="87" fill="#34d399" font-size="15" font-weight="700" letter-spacing="3">SYSTEM ARCHITECTURE // MYDM BROWSER-NATIVE ENGINE</text>
+  <text x="1200" y="87" fill="#6ee7b7" font-size="13" letter-spacing="1.5" opacity="0.75">MANIFEST V3 · DETERMINISTIC 12-STATE MACHINE · HTTP RANGE · STREAM SNIFFER</text>
+  <rect x="1740" y="68" width="76" height="28" rx="4" fill="#059669" fill-opacity="0.2" stroke="#10b981" stroke-width="1"/>
+  <text x="1754" y="86" fill="#6ee7b7" font-size="11" font-weight="700">ONLINE</text>
+
+  <!-- Left Column: Browser MV3 Orchestration -->
+  <g transform="translate(80, 140)">
+    <rect width="540" height="880" rx="12" fill="url(#card-grad)" stroke="#1a3828" stroke-width="1.5"/>
+    <rect x="0" y="0" width="540" height="48" rx="12" fill="#112219"/>
+    <text x="24" y="30" fill="#a7f3d0" font-size="14" font-weight="700" letter-spacing="2">01 // EXTENSION RUNTIME (MV3)</text>
+
+    <!-- Sub-module 1: Service Worker -->
+    <rect x="24" y="72" width="492" height="130" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="104" fill="#34d399" font-size="14" font-weight="600">background.js [Service Worker]</text>
+    <text x="44" y="132" fill="#94a3b8" font-size="12">Lifecycle orchestrator, message router, declarative</text>
+    <text x="44" y="152" fill="#94a3b8" font-size="12">net request handler, and browser download dispatcher.</text>
+    <rect x="44" y="168" width="140" height="22" rx="4" fill="#132b1e"/>
+    <text x="54" y="183" fill="#6ee7b7" font-size="10.5">chrome.downloads API</text>
+
+    <!-- Sub-module 2: Content Media Sniffer -->
+    <rect x="24" y="222" width="492" height="130" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="254" fill="#34d399" font-size="14" font-weight="600">content.js [Smart Stream Detector]</text>
+    <text x="44" y="282" fill="#94a3b8" font-size="12">Scans DOM for &lt;video&gt;, &lt;audio&gt;, embedded sources,</text>
+    <text x="44" y="302" fill="#94a3b8" font-size="12">and intercepts HLS (.m3u8) &amp; DASH (.mpd) playlists.</text>
+    <rect x="44" y="318" width="168" height="22" rx="4" fill="#132b1e"/>
+    <text x="54" y="333" fill="#6ee7b7" font-size="10.5">Live Media Sniffer Tab</text>
+
+    <!-- Sub-module 3: Security & Sanitization -->
+    <rect x="24" y="372" width="492" height="150" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="404" fill="#34d399" font-size="14" font-weight="600">filename_util.js [Sanitizer &amp; Security]</text>
+    <text x="44" y="432" fill="#94a3b8" font-size="12">RFC 5987 / 6266 filename*=UTF-8 parsing.</text>
+    <text x="44" y="452" fill="#94a3b8" font-size="12">Strict path traversal guard (leading / and .. blocked).</text>
+    <text x="44" y="472" fill="#94a3b8" font-size="12">Windows reserved device names: CON, PRN, AUX, NUL.</text>
+    <rect x="44" y="488" width="180" height="22" rx="4" fill="#132b1e"/>
+    <text x="54" y="503" fill="#6ee7b7" font-size="10.5">Strict Path Traversal Guard</text>
+
+    <!-- Sub-module 4: UI & State Store -->
+    <rect x="24" y="542" width="492" height="150" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="574" fill="#34d399" font-size="14" font-weight="600">download_store.js &amp; popup.js</text>
+    <text x="44" y="602" fill="#94a3b8" font-size="12">Authoritative state storage in chrome.storage.local.</text>
+    <text x="44" y="622" fill="#94a3b8" font-size="12">Rolling 3-second window speed &amp; honest ETA calculator.</text>
+    <text x="44" y="642" fill="#94a3b8" font-size="12">Zero-XSS sanitized DOM popup with dark theme.</text>
+    <rect x="44" y="658" width="185" height="22" rx="4" fill="#132b1e"/>
+    <text x="54" y="673" fill="#6ee7b7" font-size="10.5">Zero Telemetry · 100% Local</text>
+
+    <!-- Sub-module 5: Rules Engine -->
+    <rect x="24" y="712" width="492" height="140" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="744" fill="#34d399" font-size="14" font-weight="600">rules_engine.js [Auto-Categorization]</text>
+    <text x="44" y="772" fill="#94a3b8" font-size="12">Auto-routes downloads to clean directory tree:</text>
+    <text x="44" y="794" fill="#6ee7b7" font-size="11.5">/Documents · /Videos · /Audio · /Archives · /ISOs</text>
+    <text x="44" y="824" fill="#94a3b8" font-size="11.5">Preserves file integrity and avoids filesystem collisions.</text>
+  </g>
+
+  <!-- Center Column: Deterministic 12-State Machine -->
+  <g transform="translate(660, 140)">
+    <rect width="660" height="880" rx="12" fill="url(#card-grad)" stroke="#1a3828" stroke-width="1.5"/>
+    <rect x="0" y="0" width="660" height="48" rx="12" fill="#112219"/>
+    <text x="24" y="30" fill="#a7f3d0" font-size="14" font-weight="700" letter-spacing="2">02 // CORE ENGINE: DETERMINISTIC STATE MACHINE</text>
+
+    <!-- State Machine Diagram Flow -->
+    <!-- QUEUED -->
+    <rect x="60" y="80" width="160" height="56" rx="8" fill="#12251a" stroke="#10b981" stroke-width="1.5"/>
+    <text x="140" y="114" fill="#6ee7b7" font-size="14" font-weight="700" text-anchor="middle">QUEUED</text>
+
+    <!-- Arrow 1 -->
+    <path d="M 220 108 L 290 108" stroke="#10b981" stroke-width="2" stroke-dasharray="4,4"/>
+    <polygon points="295,108 287,103 287,113" fill="#10b981"/>
+
+    <!-- STARTING -->
+    <rect x="300" y="80" width="160" height="56" rx="8" fill="#12251a" stroke="#10b981" stroke-width="1.5"/>
+    <text x="380" y="114" fill="#6ee7b7" font-size="14" font-weight="700" text-anchor="middle">STARTING</text>
+
+    <!-- Arrow 2 -->
+    <path d="M 460 108 L 510 108 L 510 190" stroke="#10b981" stroke-width="2"/>
+    <polygon points="510,195 505,187 515,187" fill="#10b981"/>
+
+    <!-- DOWNLOADING (Central active state) -->
+    <rect x="210" y="200" width="240" height="76" rx="10" fill="#047857" fill-opacity="0.3" stroke="#34d399" stroke-width="2" filter="url(#emerald-glow)"/>
+    <text x="330" y="238" fill="#ffffff" font-size="16" font-weight="800" text-anchor="middle" letter-spacing="1">DOWNLOADING</text>
+    <text x="330" y="260" fill="#a7f3d0" font-size="11" text-anchor="middle">HTTP Range: bytes=X-Y</text>
+
+    <!-- Sub-states: PAUSING / PAUSED -->
+    <path d="M 210 238 L 140 238 L 140 310" stroke="#059669" stroke-width="1.5"/>
+    <polygon points="140,315 136,307 144,307" fill="#059669"/>
+    <rect x="60" y="320" width="160" height="52" rx="8" fill="#0f1d15" stroke="#1f4430" stroke-width="1"/>
+    <text x="140" y="352" fill="#6ee7b7" font-size="13" font-weight="600" text-anchor="middle">PAUSED</text>
+
+    <!-- RESUMING -->
+    <path d="M 140 372 L 140 420 L 300 420 L 300 285" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <polygon points="300,280 296,288 304,288" fill="#10b981"/>
+    <text x="210" y="412" fill="#6ee7b7" font-size="11" text-anchor="middle">RESUMING</text>
+
+    <!-- RETRYING / JITTER -->
+    <rect x="440" y="320" width="160" height="52" rx="8" fill="#0f1d15" stroke="#1f4430" stroke-width="1"/>
+    <text x="520" y="352" fill="#fbbf24" font-size="13" font-weight="600" text-anchor="middle">RETRYING</text>
+    <path d="M 440 250 L 520 250 L 520 315" stroke="#fbbf24" stroke-width="1.5"/>
+    <polygon points="520,318 516,310 524,310" fill="#fbbf24"/>
+    <text x="530" y="285" fill="#fde68a" font-size="10">Exp. Backoff + Jitter</text>
+
+    <!-- COMPLETING -> COMPLETED -->
+    <path d="M 330 276 L 330 460" stroke="#34d399" stroke-width="2"/>
+    <polygon points="330,466 325,458 335,458" fill="#34d399"/>
+    <rect x="230" y="470" width="200" height="56" rx="8" fill="#064e3b" stroke="#10b981" stroke-width="2"/>
+    <text x="330" y="504" fill="#a7f3d0" font-size="15" font-weight="700" text-anchor="middle">COMPLETED</text>
+
+    <!-- Concurrency Queue Details Box -->
+    <rect x="40" y="570" width="580" height="280" rx="10" fill="#0b1510" stroke="#173123" stroke-width="1"/>
+    <text x="60" y="605" fill="#34d399" font-size="14" font-weight="700" letter-spacing="1">CONCURRENCY QUEUE CONTROLLER</text>
+    <line x1="60" y1="620" x2="600" y2="620" stroke="#162e21" stroke-width="1"/>
+
+    <!-- Worker Slots -->
+    <g transform="translate(60, 640)">
+      <rect width="120" height="70" rx="6" fill="#12251a" stroke="#10b981" stroke-width="1"/>
+      <text x="14" y="28" fill="#a7f3d0" font-size="11" font-weight="700">SLOT 01</text>
+      <text x="14" y="48" fill="#34d399" font-size="11">ACTIVE (92%)</text>
+      <text x="14" y="62" fill="#6ee7b7" font-size="9.5">4.8 MB/s</text>
+    </g>
+    <g transform="translate(195, 640)">
+      <rect width="120" height="70" rx="6" fill="#12251a" stroke="#10b981" stroke-width="1"/>
+      <text x="14" y="28" fill="#a7f3d0" font-size="11" font-weight="700">SLOT 02</text>
+      <text x="14" y="48" fill="#34d399" font-size="11">ACTIVE (41%)</text>
+      <text x="14" y="62" fill="#6ee7b7" font-size="9.5">3.2 MB/s</text>
+    </g>
+    <g transform="translate(330, 640)">
+      <rect width="120" height="70" rx="6" fill="#12251a" stroke="#10b981" stroke-width="1"/>
+      <text x="14" y="28" fill="#a7f3d0" font-size="11" font-weight="700">SLOT 03</text>
+      <text x="14" y="48" fill="#fbbf24" font-size="11">PAUSED</text>
+      <text x="14" y="62" fill="#94a3b8" font-size="9.5">Range saved</text>
+    </g>
+    <g transform="translate(465, 640)">
+      <rect width="115" height="70" rx="6" fill="#0d1812" stroke="#1a3526" stroke-width="1"/>
+      <text x="14" y="28" fill="#64748b" font-size="11" font-weight="700">SLOT 04</text>
+      <text x="14" y="48" fill="#64748b" font-size="11">IDLE / QUEUED</text>
+      <text x="14" y="62" fill="#64748b" font-size="9.5">Standby</text>
+    </g>
+
+    <!-- Concurrency specs -->
+    <text x="60" y="745" fill="#94a3b8" font-size="12">· Configurable concurrency limit (1 to 10 parallel downloads)</text>
+    <text x="60" y="770" fill="#94a3b8" font-size="12">· Excess jobs automatically wait in deterministic FIFO queue</text>
+    <text x="60" y="795" fill="#94a3b8" font-size="12">· Instant wake-up upon worker slot release with zero state drift</text>
+    <text x="60" y="820" fill="#34d399" font-size="12">· Verified with automated Pytest + Node.js unit test coverage</text>
+  </g>
+
+  <!-- Right Column: Optional Native Host & Streaming Manager -->
+  <g transform="translate(1360, 140)">
+    <rect width="480" height="880" rx="12" fill="url(#card-grad)" stroke="#1a3828" stroke-width="1.5"/>
+    <rect x="0" y="0" width="480" height="48" rx="12" fill="#112219"/>
+    <text x="24" y="30" fill="#a7f3d0" font-size="14" font-weight="700" letter-spacing="2">03 // OPTIONAL NATIVE MESSAGING HOST</text>
+
+    <!-- Python Native Host -->
+    <rect x="24" y="72" width="432" height="150" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="104" fill="#34d399" font-size="14" font-weight="600">python_app/mydm_host.py</text>
+    <text x="44" y="132" fill="#94a3b8" font-size="12">Chrome Native Messaging JSON protocol.</text>
+    <text x="44" y="152" fill="#94a3b8" font-size="12">Standard I/O 32-bit length-prefixed message framing.</text>
+    <text x="44" y="172" fill="#94a3b8" font-size="12">Decoupled from browser memory limits.</text>
+    <rect x="44" y="188" width="160" height="22" rx="4" fill="#132b1e"/>
+    <text x="54" y="203" fill="#6ee7b7" font-size="10.5">Native Messaging Host</text>
+
+    <!-- Multi-threaded Segmented Downloader -->
+    <rect x="24" y="242" width="432" height="170" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="274" fill="#34d399" font-size="14" font-weight="600">downloader.py [Segmented Engine]</text>
+    <text x="44" y="302" fill="#94a3b8" font-size="12">Multi-part parallel chunk assembly.</text>
+    <text x="44" y="322" fill="#94a3b8" font-size="12">Direct disk streaming with sparse pre-allocation.</text>
+    <text x="44" y="342" fill="#94a3b8" font-size="12">Auto-merges chunks upon full stream verification.</text>
+    <text x="44" y="362" fill="#94a3b8" font-size="12">SHA-256 integrity verification.</text>
+    <rect x="44" y="378" width="150" height="22" rx="4" fill="#132b1e"/>
+    <text x="54" y="393" fill="#6ee7b7" font-size="10.5">High-Speed Segmenting</text>
+
+    <!-- yt-dlp & Streaming Manager -->
+    <rect x="24" y="432" width="432" height="150" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="464" fill="#34d399" font-size="14" font-weight="600">streaming_manager.py [yt-dlp]</text>
+    <text x="44" y="492" fill="#94a3b8" font-size="12">Extracts video/audio streams from 1000+ sources.</text>
+    <text x="44" y="512" fill="#94a3b8" font-size="12">Re-encodes and remuxes container formats.</text>
+    <text x="44" y="532" fill="#94a3b8" font-size="12">Provides resilient fallback when direct HTTP fails.</text>
+    <rect x="44" y="548" width="165" height="22" rx="4" fill="#132b1e"/>
+    <text x="54" y="563" fill="#6ee7b7" font-size="10.5">Advanced Stream Extractor</text>
+
+    <!-- Verification & Test Status Box -->
+    <rect x="24" y="602" width="432" height="250" rx="8" fill="#0b1610" stroke="#10b981" stroke-width="1"/>
+    <text x="44" y="634" fill="#a7f3d0" font-size="13" font-weight="700" letter-spacing="1">AUTOMATED TEST SUITE PASSING</text>
+    <text x="44" y="662" fill="#6ee7b7" font-size="12">✔ test_extension_modules.js (Node.js engine)</text>
+    <text x="44" y="688" fill="#6ee7b7" font-size="12">✔ test_js_suite.py (Pytest runner)</text>
+    <text x="44" y="714" fill="#6ee7b7" font-size="12">✔ test_downloader.py (Segmented tests)</text>
+    <text x="44" y="740" fill="#6ee7b7" font-size="12">✔ test_sanitize_filename.py (Security)</text>
+    <text x="44" y="766" fill="#6ee7b7" font-size="12">✔ test_live_download_server.py (Range requests)</text>
+    <text x="44" y="792" fill="#6ee7b7" font-size="12">✔ check_js_syntax.js (MV3 JS compliance)</text>
+    <text x="44" y="826" fill="#34d399" font-size="12" font-weight="600">Production Ready · 100% Passing</text>
+  </g>
+
+  <!-- Bottom Accent Line -->
+  <line x1="80" y1="1040" x2="1840" y2="1040" stroke="url(#emerald-line)" stroke-width="2"/>
+</svg>

@@ -1,7 +1,15 @@
 import { Suspense, useRef, useState } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
-import { ArchitectureDiagram, CicadaFallback, CicadaScene, FangYuanFallback, FangYuanScene, NlpDiagram, PlatformDiagram, RagDiagram, Reveal, SectionHeading } from './components'
+import { CicadaFallback, CicadaScene, FangYuanFallback, FangYuanScene, ResumeButton, Reveal, SectionHeading } from './components'
 import { experience, interests, labGroups, links, projects, techStack } from './data'
+import type { Project } from './data'
+import { DecryptedText } from './DecryptedText'
+import { TextType } from './TextType'
+import FlipCard from './FlipCard'
+import { SpotlightCard } from './SpotlightCard'
+import { ProjectDetailModal } from './ProjectDetailModal'
+import { PensatoriProjection } from './PensatoriProjection'
+import { ClothDistortionCanvas } from './ClothDistortionCanvas'
 
 export function Hero() {
   return <section className="hero section-shell" id="top">
@@ -19,13 +27,39 @@ export function Hero() {
           <span className="hero-avatar-status" title="Available for opportunities" aria-label="Available for opportunities" />
         </div>
         <div className="hero-identity-text">
-          <span className="eyebrow">01 / Personal systems</span>
+          <DecryptedText
+            text="01 / Personal systems"
+            animateOn="view"
+            speed={35}
+            sequential
+            parentClassName="eyebrow"
+          />
         </div>
       </Reveal>
       <Reveal className="hero-title-wrap"><h1>Beebek<br /><em>Sharma</em></h1></Reveal>
-      <Reveal><div className="hero-role">AI <span>/</span> Backend <span>/</span> Full-stack</div></Reveal>
+      <Reveal>
+        <div className="hero-role">
+          <TextType
+            text={[
+              'AI / LLM & RAG Systems',
+              'Backend & Distributed APIs',
+              'Full-Stack Web Applications',
+              'Real-Time WebRTC Networks',
+            ]}
+            typingSpeed={46}
+            deletingSpeed={26}
+            pauseDuration={2400}
+            cursorCharacter="▋"
+            cursorClassName="hero-role-cursor"
+            loop
+          />
+        </div>
+      </Reveal>
       <Reveal><p className="hero-intro">I build systems, APIs, and intelligent applications that solve practical problems.</p></Reveal>
-      <Reveal className="hero-actions"><a className="button button-primary" href="#work">Explore work <span>↘</span></a><a className="button button-quiet" href={links.resume || '#contact'} download={links.resume ? 'Beebek_Sharma.pdf' : undefined}>{links.resume ? 'Resume' : 'Contact'} <span>↗</span></a></Reveal>
+      <Reveal className="hero-actions">
+        <a className="button button-primary" href="#work">Explore work <span>↘</span></a>
+        <ResumeButton />
+      </Reveal>
     </div>
     <Reveal className="hero-artifact">
       <Suspense fallback={<FangYuanFallback />}>
@@ -43,18 +77,58 @@ export function WhatIBuild() {
     ['03', 'Full-stack products', 'React interfaces connected to robust Python backends, from first endpoint to final interaction.'],
     ['04', 'Networked systems', 'WebRTC, WebSockets, LAN communication, and the real-time layer between devices.'],
   ]
-  return <section className="section-shell build-section" id="build"><SectionHeading eyebrow="02 / Capabilities" title="What I build" intro="Software sits at its most interesting where systems meet people." /><div className="build-list">{items.map(([number, title, description]) => <Reveal key={number}><article className="build-item"><span className="item-number">{number}</span><h3>{title}</h3><p>{description}</p><span className="item-arrow">↗</span></article></Reveal>)}</div></section>
-}
-
-function ProjectVisual({ visual, title }: { visual: typeof projects[number]['visual']; title: string }) {
-  if (visual === 'architecture') return <ArchitectureDiagram />
-  if (visual === 'rag') return <RagDiagram />
-  if (visual === 'nlp') return <NlpDiagram />
-  return <PlatformDiagram management={title === 'Institute Management System'} />
+  return (
+    <section className="section-shell build-section" id="build">
+      <SectionHeading
+        eyebrow="02 / Capabilities"
+        title="What I build"
+        intro="Software sits at its most interesting where systems meet people."
+      />
+      <div className="build-list">
+        {items.map(([number, title, description]) => (
+          <Reveal key={number}>
+            <SpotlightCard className="build-spotlight" spotlightColor="rgba(74, 222, 128, 0.16)">
+              <article className="build-item">
+                <DecryptedText text={number} animateOn="inViewHover" speed={35} sequential parentClassName="item-number" />
+                <h3>{title}</h3>
+                <p>{description}</p>
+                <span className="item-arrow">↗</span>
+              </article>
+            </SpotlightCard>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  )
 }
 
 export function SelectedWork() {
-  return <section className="section-shell work-section" id="work"><SectionHeading eyebrow="03 / Selected work" title="Selected work" intro="A few systems I have built, explored, and learned from." /><div className="project-list">{projects.map((project) => <Reveal key={project.title}><article className={`project project-${project.number}`}><div className="project-main"><div className="project-kicker"><span>{project.number}</span><span>{project.category}</span></div><h3>{project.title}</h3><p>{project.description}</p><div className="tech-list">{project.technologies.map((technology) => <span key={technology}>{technology}</span>)}</div></div><div className="project-visual"><ProjectVisual visual={project.visual} title={project.title} /></div><div className="project-footer">{project.repository ? <a className="project-link" href={project.repository} target="_blank" rel="noreferrer">View on GitHub <span className="project-mark">↗</span></a> : <span>Repository link pending</span>}</div></article></Reveal>)}</div></section>
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+
+  return (
+    <section className="section-shell work-section" id="work">
+      <SectionHeading
+        eyebrow="03 / Selected work"
+        title="Selected work"
+        intro="A few systems I have built, explored, and learned from."
+      />
+
+      {/* Pensatori Irrazionali Project Projection System */}
+      <Reveal>
+        <PensatoriProjection
+          projects={projects}
+          onSelectProject={(p) => setSelectedProject(p)}
+        />
+      </Reveal>
+
+      {/* Jesper Landberg Inspired Detailed Project Sheet Modal */}
+      <ProjectDetailModal
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
+    </section>
+  )
 }
 
 export function Experience() {
@@ -95,27 +169,91 @@ export function About() {
     <SectionHeading eyebrow="06 / About" title="Built from the middle layer." />
     <div className="about-content">
       <Reveal className="about-portrait-card">
-        <div className="about-portrait-frame">
-          <picture>
-            <source srcSet="/beebek-sharma-portrait.webp" type="image/webp" />
-            <img
-              src="/beebek-sharma-portrait.jpg"
-              alt="Beebek Sharma"
-              className="about-portrait-img"
-              width={380}
-              height={507}
-              loading="lazy"
-            />
-          </picture>
-          <div className="about-portrait-corner corner-tl" aria-hidden="true" />
-          <div className="about-portrait-corner corner-br" aria-hidden="true" />
-        </div>
+        <FlipCard
+          width={320}
+          height={430}
+          radius={12}
+          tiltMax={10}
+          glareOpacity={0.16}
+          hoverScale={1.02}
+          background="var(--surface)"
+          color="var(--text)"
+          shadowColor="#000000"
+          shadowOpacity={0.4}
+          front={
+            <div className="portrait-card-front">
+              <ClothDistortionCanvas
+                imageSrc="/beebek-sharma-portrait.webp"
+                alt="Beebek Sharma"
+                aspectRatio={320 / 430}
+                interactive={true}
+                className="about-portrait-cloth-canvas"
+              />
+              <div className="about-portrait-corner corner-tl" aria-hidden="true" />
+              <div className="about-portrait-corner corner-br" aria-hidden="true" />
+            </div>
+          }
+          back={
+            <div className="portrait-card-back">
+              <div className="card-back-header">
+                <div className="card-back-badge">
+                  <span className="card-back-dot" />
+                  <span>ENGINEER DOSSIER</span>
+                </div>
+                <span className="card-back-id">// BS-01</span>
+              </div>
+
+              <div className="card-back-hero">
+                <img
+                  src="/beebek-sharma-avatar.webp"
+                  alt="Beebek Sharma"
+                  className="card-back-avatar"
+                  width={44}
+                  height={44}
+                />
+                <div>
+                  <h4 className="card-back-name">Beebek Sharma</h4>
+                  <span className="card-back-sub">Computer Science Graduate</span>
+                </div>
+              </div>
+
+              <div className="card-back-specs">
+                <div className="card-spec-item">
+                  <span className="spec-k">CORE</span>
+                  <span className="spec-v">AI / LLM & Backend Systems</span>
+                </div>
+                <div className="card-spec-item">
+                  <span className="spec-k">STACK</span>
+                  <span className="spec-v">React · Django · Python</span>
+                </div>
+                <div className="card-spec-item">
+                  <span className="spec-k">SYSTEMS</span>
+                  <span className="spec-v">RAG · REST APIs · FastAPI</span>
+                </div>
+                <div className="card-spec-item">
+                  <span className="spec-k">DEGREE</span>
+                  <span className="spec-v">B.Sc. CSIT</span>
+                </div>
+                <div className="card-spec-item">
+                  <span className="spec-k">LOCATION</span>
+                  <span className="spec-v">Kathmandu, Nepal</span>
+                </div>
+              </div>
+
+              <div className="card-back-footer">
+                <span className="card-flip-return">↻ FLIP BACK</span>
+                <span className="card-sys-live">SYS: ONLINE</span>
+              </div>
+            </div>
+          }
+          className="about-flip-card"
+        />
         <div className="about-portrait-meta">
           <div>
             <strong>Beebek Sharma</strong>
-            <span>Computer Science & Engineering</span>
+            <span>Computer Science</span>
           </div>
-
+          <span className="about-portrait-loc">Kathmandu, NP</span>
         </div>
       </Reveal>
 
@@ -136,7 +274,27 @@ export function About() {
 }
 
 export function BeyondTheCode() {
-  return <section className="section-shell interests-section" id="interests"><SectionHeading eyebrow="07 / Beyond the code" title="Other inputs" intro="The things that keep the work human." /><div className="interest-list">{interests.map((interest) => <Reveal key={interest.title}><div className="interest-row"><span>{interest.number}</span><h3>{interest.title}</h3><p>{interest.description}<small>{interest.detail}</small></p></div></Reveal>)}</div></section>
+  return (
+    <section className="section-shell interests-section" id="interests">
+      <SectionHeading eyebrow="07 / Beyond the code" title="Other inputs" intro="The things that keep the work human." />
+      <div className="interest-list">
+        {interests.map((interest) => (
+          <Reveal key={interest.title}>
+            <SpotlightCard className="interest-spotlight" spotlightColor="rgba(255, 255, 255, 1)">
+              <div className="interest-row">
+                <span>{interest.number}</span>
+                <h3>{interest.title}</h3>
+                <p>
+                  {interest.description}
+                  <small>{interest.detail}</small>
+                </p>
+              </div>
+            </SpotlightCard>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  )
 }
 
 export function Education() {
@@ -144,5 +302,5 @@ export function Education() {
 }
 
 export function Contact() {
-  return <section className="contact-section" id="contact"><div className="contact-inner"><div className="contact-copy"><span className="eyebrow">09 / Open channel</span><h2>Let’s build<br /><em>something.</em></h2><p>For projects, collaboration, or technical conversations.</p><div className="contact-links">{links.email ? <a href={`mailto:${links.email}`}>Email <span>↗</span></a> : <span className="contact-pending">Email / address to add</span>}{links.phone ? <a href={`tel:${links.phone}`}>Phone <span>↗</span></a> : null}<a href={links.github} target="_blank" rel="noreferrer">GitHub <span>↗</span></a><a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a><a href={links.medium} target="_blank" rel="noreferrer">Medium <span>↗</span></a><a href={links.instagram} target="_blank" rel="noreferrer">Instagram <span>↗</span></a><a href={links.facebook} target="_blank" rel="noreferrer">Facebook <span>↗</span></a></div></div><Reveal className="contact-cicada"><Suspense fallback={<CicadaFallback />}><CicadaScene /></Suspense></Reveal></div></section>
+  return <section className="contact-section" id="contact"><div className="contact-inner"><div className="contact-copy"><span className="eyebrow">09 / Open channel</span><h2>Let’s build<br /><em>something.</em></h2><p>For projects, collaboration, or technical conversations.</p><div className="contact-links">{links.email ? <a href={`mailto:${links.email}`}>Email <span>↗</span></a> : <span className="contact-pending">Email / address to add</span>}<a href={links.github} target="_blank" rel="noreferrer">GitHub <span>↗</span></a><a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a><a href={links.medium} target="_blank" rel="noreferrer">Medium <span>↗</span></a><a href={links.instagram} target="_blank" rel="noreferrer">Instagram <span>↗</span></a><a href={links.facebook} target="_blank" rel="noreferrer">Facebook <span>↗</span></a></div></div><Reveal className="contact-cicada"><Suspense fallback={<CicadaFallback />}><CicadaScene /></Suspense></Reveal></div></section>
 }

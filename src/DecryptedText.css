@@ -1,0 +1,32 @@
+.decrypted-text-wrapper {
+  display: inline-block;
+  white-space: pre-wrap;
+  vertical-align: baseline;
+}
+
+.decrypted-text-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  visibility: hidden;
+}
+
+.decrypted-char--encrypted {
+  color: var(--accent-bright, #34d399);
+  opacity: 0.88;
+  font-family: var(--mono, 'DM Mono', monospace);
+  text-shadow: 0 0 6px rgba(52, 211, 153, 0.45);
+  font-weight: 500;
+  display: inline-block;
+  transform: translateZ(0);
+}
+
+[data-theme="light"] .decrypted-char--encrypted {
+  color: var(--accent, #195845);
+  text-shadow: 0 0 4px rgba(25, 88, 69, 0.3);
+}

@@ -1,0 +1,42 @@
+.text-type {
+  display: inline-block;
+  white-space: pre-wrap;
+  vertical-align: baseline;
+}
+
+.text-type__content {
+  display: inline;
+}
+
+.text-type__cursor {
+  margin-left: 0.22rem;
+  display: inline-block;
+  color: var(--accent-bright, #34d399);
+  animation: text-type-cursor-blink 0.95s infinite ease-in-out;
+  line-height: 1;
+  vertical-align: baseline;
+}
+
+[data-theme="light"] .text-type__cursor {
+  color: var(--accent, #195845);
+}
+
+.text-type__cursor--hidden {
+  display: none !important;
+}
+
+@keyframes text-type-cursor-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-type__cursor {
+    animation: none;
+    opacity: 1;
+  }
+}

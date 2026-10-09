@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" style="background:#080d0b; font-family:'JetBrains Mono', 'Fira Code', 'Segoe UI', monospace;">
+  <defs>
+    <linearGradient id="grid-glow-lan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.08"/>
+      <stop offset="50%" stop-color="#059669" stop-opacity="0.02"/>
+      <stop offset="100%" stop-color="#047857" stop-opacity="0.06"/>
+    </linearGradient>
+    <linearGradient id="card-grad-lan" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#121e17" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#0a120e" stop-opacity="0.98"/>
+    </linearGradient>
+    <linearGradient id="emerald-line-lan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#10b981" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="p2p-beam" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#6ee7b7" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0.8"/>
+    </linearGradient>
+    <pattern id="tech-grid-lan" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#13241a" stroke-width="1" stroke-opacity="0.55"/>
+      <circle cx="0" cy="0" r="1.5" fill="#10b981" fill-opacity="0.25"/>
+    </pattern>
+    <filter id="emerald-glow-lan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background Grid -->
+  <rect width="1920" height="1080" fill="#070c09"/>
+  <rect width="1920" height="1080" fill="url(#tech-grid-lan)"/>
+  <rect width="1920" height="1080" fill="url(#grid-glow-lan)"/>
+
+  <!-- Top System Header Bar -->
+  <rect x="80" y="50" width="1760" height="64" rx="8" fill="#0d1812" stroke="#1a3325" stroke-width="1.5"/>
+  <circle cx="114" cy="82" r="5" fill="#10b981" filter="url(#emerald-glow-lan)"/>
+  <text x="135" y="87" fill="#34d399" font-size="15" font-weight="700" letter-spacing="3">SYSTEM ARCHITECTURE // LAN SHARE PEER-TO-PEER ENGINE</text>
+  <text x="1170" y="87" fill="#6ee7b7" font-size="13" letter-spacing="1.5" opacity="0.75">WEBRTC DATACHANNEL · LOCAL FLASK-SOCKETIO SIGNALING · ZERO CLOUD RELAY</text>
+  <rect x="1740" y="68" width="76" height="28" rx="4" fill="#059669" fill-opacity="0.2" stroke="#10b981" stroke-width="1"/>
+  <text x="1750" y="86" fill="#6ee7b7" font-size="11" font-weight="700">P2P LINK</text>
+
+  <!-- Node A: Sender / Initiator Device -->
+  <g transform="translate(80, 140)">
+    <rect width="520" height="880" rx="12" fill="url(#card-grad-lan)" stroke="#1a3828" stroke-width="1.5"/>
+    <rect x="0" y="0" width="520" height="48" rx="12" fill="#112219"/>
+    <text x="24" y="30" fill="#a7f3d0" font-size="14" font-weight="700" letter-spacing="2">01 // DEVICE NODE A [INITIATOR]</text>
+
+    <!-- Chrome Extension Client -->
+    <rect x="24" y="72" width="472" height="150" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="104" fill="#34d399" font-size="14" font-weight="600">Chrome Extension UI &amp; File Slicer</text>
+    <text x="44" y="132" fill="#94a3b8" font-size="12">Drag-and-drop file ingestion, dynamic 64KB chunking,</text>
+    <text x="44" y="152" fill="#94a3b8" font-size="12">ArrayBuffer memory buffering, and progress calculation.</text>
+    <text x="44" y="172" fill="#94a3b8" font-size="12">Generates one-time QR code for rapid mobile pairing.</text>
+    <rect x="44" y="188" width="150" height="22" rx="4" fill="#132b1e"/>
+    <text x="54" y="203" fill="#6ee7b7" font-size="10.5">64KB Chunk Streamer</text>
+
+    <!-- Native Messaging Host -->
+    <rect x="24" y="242" width="472" height="150" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="274" fill="#34d399" font-size="14" font-weight="600">Native Messaging Bridge (Python)</text>
+    <text x="44" y="302" fill="#94a3b8" font-size="12">Bypasses browser sandboxed file constraints for gigabyte</text>
+    <text x="44" y="322" fill="#94a3b8" font-size="12">transfers. Direct OS filesystem descriptors via stdio.</text>
+    <rect x="44" y="348" width="165" height="22" rx="4" fill="#132b1e"/>
+    <text x="54" y="363" fill="#6ee7b7" font-size="10.5">Direct OS Disk Stream</text>
+
+    <!-- WebRTC PeerConnection (Local) -->
+    <rect x="24" y="412" width="472" height="200" rx="8" fill="#0b1610" stroke="#10b981" stroke-width="1.5"/>
+    <text x="44" y="444" fill="#a7f3d0" font-size="14" font-weight="700">RTCPeerConnection Instance</text>
+    <text x="44" y="472" fill="#94a3b8" font-size="12">· SDP Offer creation (RTCSdpType = "offer")</text>
+    <text x="44" y="496" fill="#94a3b8" font-size="12">· Local ICE Candidates gathering (LAN host candidates)</text>
+    <text x="44" y="520" fill="#94a3b8" font-size="12">· RTCDataChannel created: "fileTransferChannel"</text>
+    <text x="44" y="544" fill="#94a3b8" font-size="12">· SCTP Protocol negotiation with ordered delivery</text>
+    <text x="44" y="574" fill="#34d399" font-size="13" font-weight="600">Status: Channel State = "OPEN"</text>
+
+    <!-- Node A Specs -->
+    <rect x="24" y="632" width="472" height="220" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="664" fill="#34d399" font-size="13" font-weight="700">PERFORMANCE METRICS</text>
+    <text x="44" y="694" fill="#94a3b8" font-size="12">Transfer Speed: Limited only by Wi-Fi / LAN switch</text>
+    <text x="44" y="718" fill="#94a3b8" font-size="12">Throughput: Up to 110 MB/s on Gigabit Wi-Fi 6</text>
+    <text x="44" y="742" fill="#94a3b8" font-size="12">Latency: &lt; 2ms RTT within identical subnet</text>
+    <text x="44" y="766" fill="#94a3b8" font-size="12">Encryption: DTLS 1.2 (End-to-End hardware AES)</text>
+    <text x="44" y="796" fill="#6ee7b7" font-size="12">Zero cloud transit · 100% Peer-to-Peer</text>
+  </g>
+
+  <!-- Center Column: Local Signaling & Subnet Mesh -->
+  <g transform="translate(640, 140)">
+    <rect width="640" height="880" rx="12" fill="url(#card-grad-lan)" stroke="#1a3828" stroke-width="1.5"/>
+    <rect x="0" y="0" width="640" height="48" rx="12" fill="#112219"/>
+    <text x="24" y="30" fill="#a7f3d0" font-size="14" font-weight="700" letter-spacing="2">02 // LOCAL SIGNALING &amp; SUBNET ROUTING</text>
+
+    <!-- Direct P2P Pipe Visualization across center -->
+    <rect x="40" y="72" width="560" height="220" rx="10" fill="#062215" stroke="#10b981" stroke-width="2" filter="url(#emerald-glow-lan)"/>
+    <text x="320" y="112" fill="#ffffff" font-size="17" font-weight="800" text-anchor="middle" letter-spacing="2">DIRECT WEBRTC DATA PIPE</text>
+    <text x="320" y="136" fill="#6ee7b7" font-size="12" text-anchor="middle">SCTP over DTLS (Port 50000-60000 Local LAN)</text>
+
+    <!-- Animated looking Data Packet Pipeline -->
+    <line x1="70" y1="180" x2="570" y2="180" stroke="url(#p2p-beam)" stroke-width="6"/>
+    <rect x="120" y="165" width="40" height="30" rx="4" fill="#34d399"/>
+    <text x="140" y="184" fill="#064e3b" font-size="9" font-weight="700" text-anchor="middle">CH-01</text>
+    <rect x="220" y="165" width="40" height="30" rx="4" fill="#34d399"/>
+    <text x="240" y="184" fill="#064e3b" font-size="9" font-weight="700" text-anchor="middle">CH-02</text>
+    <rect x="320" y="165" width="40" height="30" rx="4" fill="#34d399"/>
+    <text x="340" y="184" fill="#064e3b" font-size="9" font-weight="700" text-anchor="middle">CH-03</text>
+    <rect x="420" y="165" width="40" height="30" rx="4" fill="#34d399"/>
+    <text x="440" y="184" fill="#064e3b" font-size="9" font-weight="700" text-anchor="middle">CH-04</text>
+
+    <text x="320" y="240" fill="#a7f3d0" font-size="12" text-anchor="middle">No Internet Required · Packets never leave the local switch / AP</text>
+    <text x="320" y="262" fill="#6ee7b7" font-size="11" text-anchor="middle">SHA-256 chunk validation ensures 100% byte fidelity</text>
+
+    <!-- Local Signaling Server Box -->
+    <rect x="40" y="320" width="560" height="260" rx="10" fill="#0b1510" stroke="#173123" stroke-width="1.5"/>
+    <text x="60" y="355" fill="#34d399" font-size="14" font-weight="700" letter-spacing="1">LOCAL SIGNALING SERVER [FLASK-SOCKETIO]</text>
+    <line x1="60" y1="370" x2="580" y2="370" stroke="#162e21" stroke-width="1"/>
+
+    <text x="60" y="405" fill="#94a3b8" font-size="12">1. Runs on local subnet host: <tspan fill="#6ee7b7">http://192.168.1.100:5000</tspan></text>
+    <text x="60" y="435" fill="#94a3b8" font-size="12">2. WebSocket Room coordination: <tspan fill="#6ee7b7">room_id = SHA256(secret)[:8]</tspan></text>
+    <text x="60" y="465" fill="#94a3b8" font-size="12">3. Exchanging SDP Offer / Answer descriptors securely</text>
+    <text x="60" y="495" fill="#94a3b8" font-size="12">4. Relays ICE Candidates between local host IP addresses</text>
+    <text x="60" y="525" fill="#94a3b8" font-size="12">5. Immediately idles once P2P RTCDataChannel connects</text>
+    <text x="60" y="555" fill="#34d399" font-size="12">Zero payload data flows through the signaling server!</text>
+
+    <!-- Pairing Workflow -->
+    <rect x="40" y="605" width="560" height="245" rx="10" fill="#0b1510" stroke="#173123" stroke-width="1"/>
+    <text x="60" y="640" fill="#34d399" font-size="14" font-weight="700" letter-spacing="1">PAIRING &amp; DISCOVERY FLOW</text>
+    <line x1="60" y1="655" x2="580" y2="655" stroke="#162e21" stroke-width="1"/>
+
+    <g transform="translate(60, 675)">
+      <rect width="150" height="60" rx="6" fill="#12251a" stroke="#10b981" stroke-width="1"/>
+      <text x="14" y="26" fill="#a7f3d0" font-size="11" font-weight="700">STEP 1</text>
+      <text x="14" y="46" fill="#6ee7b7" font-size="10">Scan QR Code</text>
+    </g>
+    <path d="M 215 705 L 245 705" stroke="#10b981" stroke-width="1.5"/>
+    <polygon points="248,705 242,701 242,709" fill="#10b981"/>
+
+    <g transform="translate(250, 675)">
+      <rect width="150" height="60" rx="6" fill="#12251a" stroke="#10b981" stroke-width="1"/>
+      <text x="14" y="26" fill="#a7f3d0" font-size="11" font-weight="700">STEP 2</text>
+      <text x="14" y="46" fill="#6ee7b7" font-size="10">Join Socket Room</text>
+    </g>
+    <path d="M 405 705 L 435 705" stroke="#10b981" stroke-width="1.5"/>
+    <polygon points="438,705 432,701 432,709" fill="#10b981"/>
+
+    <g transform="translate(440, 675)">
+      <rect width="140" height="60" rx="6" fill="#12251a" stroke="#10b981" stroke-width="1"/>
+      <text x="14" y="26" fill="#a7f3d0" font-size="11" font-weight="700">STEP 3</text>
+      <text x="14" y="46" fill="#6ee7b7" font-size="10">Direct P2P Link</text>
+    </g>
+
+    <text x="60" y="775" fill="#94a3b8" font-size="12">· Dynamic pairing completes in &lt; 350ms</text>
+    <text x="60" y="800" fill="#94a3b8" font-size="12">· Automatic reconnect on network handoff (Wi-Fi roaming)</text>
+    <text x="60" y="825" fill="#34d399" font-size="12">· Fully cross-platform (Chrome, Firefox, Android, Linux)</text>
+  </g>
+
+  <!-- Node B: Receiver Device -->
+  <g transform="translate(1320, 140)">
+    <rect width="520" height="880" rx="12" fill="url(#card-grad-lan)" stroke="#1a3828" stroke-width="1.5"/>
+    <rect x="0" y="0" width="520" height="48" rx="12" fill="#112219"/>
+    <text x="24" y="30" fill="#a7f3d0" font-size="14" font-weight="700" letter-spacing="2">03 // DEVICE NODE B [RECEIVER]</text>
+
+    <!-- Chunk Assembler -->
+    <rect x="24" y="72" width="472" height="150" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="104" fill="#34d399" font-size="14" font-weight="600">Chunk Assembler &amp; Memory Buffer</text>
+    <text x="44" y="132" fill="#94a3b8" font-size="12">Receives ordered ArrayBuffer streams over RTCDataChannel.</text>
+    <text x="44" y="152" fill="#94a3b8" font-size="12">Sequential index validation prevents dropped chunks.</text>
+    <text x="44" y="172" fill="#94a3b8" font-size="12">Real-time throughput gauge &amp; time-remaining estimator.</text>
+    <rect x="44" y="188" width="165" height="22" rx="4" fill="#132b1e"/>
+    <text x="54" y="203" fill="#6ee7b7" font-size="10.5">Sequential Packet Sorter</text>
+
+    <!-- Native Disk Writer -->
+    <rect x="24" y="242" width="472" height="150" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="274" fill="#34d399" font-size="14" font-weight="600">Filesystem Stream Writer</text>
+    <text x="44" y="302" fill="#94a3b8" font-size="12">Direct File System Access API or Native Messaging</text>
+    <text x="44" y="322" fill="#94a3b8" font-size="12">flushes chunks directly to persistent disk storage,</text>
+    <text x="44" y="342" fill="#94a3b8" font-size="12">eliminating RAM exhaustion on multi-gigabyte transfers.</text>
+    <rect x="44" y="358" width="165" height="22" rx="4" fill="#132b1e"/>
+    <text x="54" y="373" fill="#6ee7b7" font-size="10.5">High-Speed Disk Flushing</text>
+
+    <!-- Integrity Hash Verifier -->
+    <rect x="24" y="412" width="472" height="200" rx="8" fill="#0b1610" stroke="#10b981" stroke-width="1.5"/>
+    <text x="44" y="444" fill="#a7f3d0" font-size="14" font-weight="700">Integrity &amp; Security Validation</text>
+    <text x="44" y="472" fill="#94a3b8" font-size="12">· Incremental SHA-256 digest computed on arrival</text>
+    <text x="44" y="496" fill="#94a3b8" font-size="12">· Final checksum verified against sender descriptor</text>
+    <text x="44" y="520" fill="#94a3b8" font-size="12">· Zero corrupted files guarantee</text>
+    <text x="44" y="544" fill="#94a3b8" font-size="12">· Automatic file quarantine on hash mismatch</text>
+    <text x="44" y="574" fill="#34d399" font-size="13" font-weight="600">Verification Status: 100% Match</text>
+
+    <!-- Node B Features -->
+    <rect x="24" y="632" width="472" height="220" rx="8" fill="#0b1610" stroke="#173123" stroke-width="1"/>
+    <text x="44" y="664" fill="#34d399" font-size="13" font-weight="700">SYSTEM HIGHLIGHTS</text>
+    <text x="44" y="694" fill="#94a3b8" font-size="12">Zero External Dependencies: Operates in offline airgap</text>
+    <text x="44" y="718" fill="#94a3b8" font-size="12">Zero Setup: Recipient needs only standard web browser</text>
+    <text x="44" y="742" fill="#94a3b8" font-size="12">No Size Cap: Successfully tested with 10GB+ files</text>
+    <text x="44" y="766" fill="#94a3b8" font-size="12">Cross-Platform: Windows, macOS, Linux, Android</text>
+    <text x="44" y="796" fill="#6ee7b7" font-size="12">Open Source on GitHub: Beebek-Sharma/lan-share</text>
+  </g>
+
+  <!-- Bottom Accent Line -->
+  <line x1="80" y1="1040" x2="1840" y2="1040" stroke="url(#emerald-line-lan)" stroke-width="2"/>
+</svg>

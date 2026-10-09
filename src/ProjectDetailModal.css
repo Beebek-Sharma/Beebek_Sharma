@@ -1,0 +1,341 @@
+/* Jesper Landberg Inspired Project Sheet Modal */
+.jesper-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(3, 7, 5, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  animation: jesper-backdrop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.jesper-sheet-panel {
+  position: relative;
+  width: min(100%, 1240px);
+  max-height: min(92vh, 900px);
+  overflow-y: auto;
+  border-radius: 20px;
+  background: rgba(8, 18, 14, 0.95);
+  border: 1px solid rgba(74, 222, 128, 0.22);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 40px rgba(23, 77, 61, 0.25);
+  padding: clamp(2rem, 4vw, 3.5rem);
+  animation: jesper-sheet-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.jesper-sheet-close-slot {
+  position: absolute;
+  top: clamp(1.2rem, 2.5vw, 2rem);
+  right: clamp(1.2rem, 2.5vw, 2rem);
+  z-index: 50;
+}
+
+.jesper-sheet-content {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+}
+
+/* Metadata Column */
+.jesper-sheet-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.jesper-sheet-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  color: var(--accent-bright);
+  text-transform: uppercase;
+}
+
+.jesper-sheet-sep {
+  color: var(--faint);
+}
+
+.jesper-sheet-title {
+  margin: 1.2rem 0 1rem;
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+  color: #ffffff;
+}
+
+.jesper-sheet-desc {
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: #a1ada6;
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+
+.jesper-sheet-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.4rem;
+}
+
+.jesper-tech-pill {
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(137, 147, 142, 0.25);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: #e8ece9;
+  letter-spacing: 0.02em;
+}
+
+.jesper-sheet-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.jesper-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: all 0.25s ease;
+}
+
+.jesper-action-live {
+  color: #ffffff;
+  background: rgba(74, 222, 128, 0.18);
+  border: 1px solid #4ade80;
+  box-shadow: 0 0 16px rgba(74, 222, 128, 0.22);
+}
+
+.jesper-action-live:hover {
+  background: rgba(74, 222, 128, 0.32);
+  box-shadow: 0 0 24px rgba(74, 222, 128, 0.38);
+  transform: translateY(-2px);
+}
+
+.jesper-action-code {
+  color: #e8ece9;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(137, 147, 142, 0.25);
+}
+
+.jesper-action-code:hover {
+  color: #4ade80;
+  border-color: #4ade80;
+  background: rgba(74, 222, 128, 0.12);
+  transform: translateY(-2px);
+}
+
+.jesper-sheet-hint {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--faint);
+  letter-spacing: 0.03em;
+}
+
+.jesper-hint-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-bright);
+  opacity: 0.6;
+}
+
+/* Visual Column */
+.jesper-sheet-visual-col {
+  width: 100%;
+}
+
+.jesper-visual-window {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  background: #040907;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+}
+
+.jesper-window-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.6rem 1rem;
+  background: rgba(14, 28, 22, 0.9);
+  border-bottom: 1px solid var(--border);
+}
+
+.jesper-window-url {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.jesper-window-canvas-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 380px;
+  background: #020504;
+}
+
+.jesper-window-placeholder {
+  min-height: 380px;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  color: var(--muted);
+}
+
+@keyframes jesper-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes jesper-sheet-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 960px) {
+  .jesper-sheet-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .jesper-sheet-panel {
+    padding: 2.5rem 1.6rem 2rem;
+  }
+  .jesper-sheet-title {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .jesper-sheet-panel {
+    border-radius: 14px;
+    padding: 2rem 1.2rem;
+    max-height: 94vh;
+  }
+  .jesper-sheet-title {
+    font-size: clamp(1.8rem, 8vw, 2.6rem);
+  }
+  .jesper-sheet-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .jesper-action-btn {
+    justify-content: center;
+  }
+}
+
+/* ── Light Mode Specific Polish for ProjectDetailModal ── */
+[data-theme="light"] .jesper-sheet-backdrop {
+  background: rgba(17, 24, 21, 0.52);
+}
+
+[data-theme="light"] .jesper-sheet-panel {
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(23, 77, 61, 0.18);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12), 0 0 35px rgba(23, 77, 61, 0.06);
+}
+
+[data-theme="light"] .jesper-sheet-title {
+  color: #111815;
+}
+
+[data-theme="light"] .jesper-sheet-desc {
+  color: #4e5c56;
+}
+
+[data-theme="light"] .jesper-sheet-eyebrow {
+  color: #14634d;
+}
+
+[data-theme="light"] .jesper-sheet-sep {
+  color: rgba(23, 77, 61, 0.3);
+}
+
+[data-theme="light"] .jesper-tech-pill {
+  background: rgba(23, 77, 61, 0.06);
+  border: 1px solid rgba(23, 77, 61, 0.18);
+  color: #111815;
+}
+
+[data-theme="light"] .jesper-action-live {
+  color: #ffffff;
+  background: #195845;
+  border-color: #195845;
+  box-shadow: 0 4px 16px rgba(25, 88, 69, 0.25);
+}
+
+[data-theme="light"] .jesper-action-live:hover {
+  background: #14634d;
+  border-color: #14634d;
+  box-shadow: 0 6px 22px rgba(20, 99, 77, 0.32);
+}
+
+[data-theme="light"] .jesper-action-code {
+  color: #111815;
+  background: #ffffff;
+  border: 1px solid rgba(23, 77, 61, 0.22);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .jesper-action-code:hover {
+  color: #14634d;
+  border-color: #14634d;
+  background: rgba(20, 99, 77, 0.08);
+}
+
+[data-theme="light"] .jesper-sheet-hint {
+  color: #73827b;
+}
+
+[data-theme="light"] .jesper-hint-dot {
+  background: #14634d;
+}
+
+[data-theme="light"] .jesper-visual-window {
+  border-color: rgba(23, 77, 61, 0.2);
+  background: #edf3ef;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .jesper-window-bar {
+  background: #e2ece5;
+  border-bottom: 1px solid rgba(23, 77, 61, 0.14);
+}
+
+[data-theme="light"] .jesper-window-url {
+  color: #4e5c56;
+}
+
+[data-theme="light"] .jesper-window-canvas-wrap {
+  background: #f7faf8;
+}
