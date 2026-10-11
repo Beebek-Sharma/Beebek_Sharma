@@ -2229,3 +2229,158 @@ p { color: var(--muted); line-height: 1.75; }
   .reveal { opacity: 1; transform: none; }
   .lab-wire-flow, .lab-core-orbit { animation: none; }
 }
+
+
+/* ──────────────────────────────────────────────────────────────────
+   DARK SPATIAL NEUMORPHISM
+   A restrained, reversible surface layer over the existing portfolio.
+   Keeps the current content, components, and Three.js scenes intact.
+   ────────────────────────────────────────────────────────────────── */
+:root {
+  --spatial-raised:
+    8px 8px 20px rgba(0, 0, 0, 0.34),
+    -5px -5px 16px rgba(255, 255, 255, 0.025),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  --spatial-inset:
+    inset 3px 3px 8px rgba(0, 0, 0, 0.32),
+    inset -2px -2px 7px rgba(255, 255, 255, 0.018);
+  --spatial-glow: 0 0 26px rgba(91, 156, 130, 0.09);
+  --spatial-radius: 18px;
+}
+
+[data-theme="light"] {
+  --spatial-raised:
+    7px 7px 18px rgba(25, 50, 38, 0.09),
+    -5px -5px 16px rgba(255, 255, 255, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  --spatial-inset:
+    inset 3px 3px 8px rgba(25, 50, 38, 0.08),
+    inset -2px -2px 7px rgba(255, 255, 255, 0.9);
+  --spatial-glow: 0 0 24px rgba(25, 88, 69, 0.07);
+}
+
+.nav-pill-dock,
+.theme-toggle-group,
+.sound-toggle,
+.nav-social-mini a,
+.menu-toggle {
+  box-shadow: var(--spatial-raised);
+}
+
+.nav-dock-link.is-active,
+.theme-btn.is-active {
+  box-shadow: var(--spatial-inset), var(--spatial-glow);
+}
+
+.button {
+  position: relative;
+  border-radius: 999px;
+  box-shadow: var(--spatial-raised);
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 10px 12px 24px rgba(0, 0, 0, 0.28), var(--spatial-glow);
+}
+
+.button:active {
+  transform: translateY(0);
+  box-shadow: var(--spatial-inset);
+}
+
+.button-primary {
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.24),
+    0 0 20px rgba(91, 156, 130, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.project,
+.interest-spotlight.spotlight-card,
+.lab-detail,
+.lab-map,
+.about-flip-card {
+  border-radius: var(--spatial-radius);
+  box-shadow: var(--spatial-raised);
+  isolation: isolate;
+}
+
+.project,
+.interest-spotlight.spotlight-card {
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(91, 156, 130, 0.07), transparent 45%),
+    linear-gradient(145deg, rgba(13, 25, 20, 0.94), rgba(5, 10, 8, 0.96));
+  border-color: rgba(137, 147, 142, 0.17);
+  transition:
+    transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.project:hover,
+.interest-spotlight.spotlight-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(91, 156, 130, 0.34);
+  box-shadow: var(--spatial-raised), var(--spatial-glow);
+}
+
+.lab-map {
+  box-shadow: var(--spatial-inset);
+  border-color: rgba(91, 156, 130, 0.2);
+}
+
+.lab-node,
+.diagram-step,
+.rag-step {
+  box-shadow: var(--spatial-raised);
+  border-radius: 12px;
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.lab-node:hover,
+.lab-node.is-active {
+  transform: translateY(-2px);
+  box-shadow: var(--spatial-raised), var(--spatial-glow);
+}
+
+.nav-social-mini a:hover,
+.sound-toggle:hover,
+.menu-toggle:hover {
+  box-shadow: var(--spatial-glow);
+}
+
+[data-theme="light"] .project,
+[data-theme="light"] .interest-spotlight.spotlight-card {
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(25, 88, 69, 0.045), transparent 45%),
+    linear-gradient(145deg, #ffffff, #f0f5f1);
+  box-shadow: var(--spatial-raised);
+}
+
+[data-theme="light"] .lab-map {
+  box-shadow: var(--spatial-inset);
+}
+
+@media (hover: none) {
+  .project:hover,
+  .interest-spotlight.spotlight-card:hover,
+  .button:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project,
+  .interest-spotlight.spotlight-card,
+  .button,
+  .lab-node,
+  .diagram-step,
+  .rag-step {
+    transition: none !important;
+  }
+}
