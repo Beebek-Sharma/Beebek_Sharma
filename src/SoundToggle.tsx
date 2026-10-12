@@ -50,22 +50,21 @@ export function SoundToggle() {
 
   return (
     <button
-      className={`sound-toggle ${isPlaying ? 'is-playing' : ''}`}
+      className={`nav-icon-btn sound-toggle-btn ${isPlaying ? 'is-playing' : ''}`}
       type="button"
       onClick={toggleSound}
-      aria-label={isPlaying ? 'Mute ambient sound' : 'Play ambient sound'}
+      aria-label={isPlaying ? 'Pause background sound' : 'Play background sound'}
       aria-pressed={isPlaying}
-      title={isPlaying ? 'Turn sound off' : 'Turn sound on'}
+      title={isPlaying ? 'Music: Playing (Click to mute)' : 'Music: Paused (Click to play)'}
     >
-      <span className="sound-bars" aria-hidden="true">
-        <span className="sound-bar bar-1" />
-        <span className="sound-bar bar-2" />
-        <span className="sound-bar bar-3" />
-        <span className="sound-bar bar-4" />
-      </span>
-      <span className="sound-label">
-        MUSIC <em>{isPlaying ? 'ON' : 'OFF'}</em>
+      <span className="sound-waveform" aria-hidden="true">
+        <span className="waveform-bar bar-1" />
+        <span className="waveform-bar bar-2" />
+        <span className="waveform-bar bar-3" />
+        <span className="waveform-bar bar-4" />
+        <span className="waveform-bar bar-5" />
       </span>
     </button>
   )
 }
+

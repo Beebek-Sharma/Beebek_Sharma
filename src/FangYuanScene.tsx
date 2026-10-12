@@ -302,13 +302,27 @@ function FangYuanShowcaseGeometry({
   })
 
   return (
-    <group ref={floatGroup}>
-      <group ref={rotateGroup} rotation={[0.02, 0, 0]}>
-        <Suspense fallback={<ModelLoadingPlaceholder />}>
-          <FangYuanModel onLoaded={onModelLoaded} />
-        </Suspense>
+    <group position={[0, 0.08, 0]}>
+      {/* Anchored Spatial Contact & Orientation Ring */}
+      <group position={[0, -0.85, 0]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]}>
+          <ringGeometry args={[0.2, 1.15, 36]} />
+          <meshBasicMaterial color="#020604" transparent opacity={0.65} />
+        </mesh>
+        <mesh rotation={[-Math.PI / 2, 0, 0]}>
+          <ringGeometry args={[1.13, 1.15, 48]} />
+          <meshBasicMaterial color="#5b9c82" transparent opacity={0.3} />
+        </mesh>
       </group>
-      <TemporalSparks quality={quality} reduced={reduced} />
+
+      <group ref={floatGroup}>
+        <group ref={rotateGroup} rotation={[0.02, 0, 0]}>
+          <Suspense fallback={<ModelLoadingPlaceholder />}>
+            <FangYuanModel onLoaded={onModelLoaded} />
+          </Suspense>
+        </group>
+        <TemporalSparks quality={quality} reduced={reduced} />
+      </group>
     </group>
   )
 }
@@ -393,7 +407,7 @@ function FangYuanSceneContent() {
     >
       <div className="fang-scene-grid" aria-hidden="true" />
       <Canvas
-        camera={{ position: [0, 0.2, 3.2], fov: 38 }}
+        camera={{ position: [0, 0.06, 3.32], fov: 37 }}
         dpr={quality === 'low' ? 1 : [1, 1.5]}
         frameloop={frameMode}
         shadows
@@ -442,6 +456,13 @@ function FangYuanSceneContent() {
           intensity={0.8}
           color="#e2d9c8"
           distance={3.5}
+        />
+
+        {/* 7. Cinematic Mint/Emerald Rim Light (Silhouette Sculpting) */}
+        <directionalLight
+          position={[-2.6, 2.0, -2.0]}
+          intensity={1.5}
+          color="#5b9c82"
         />
 
         <FangYuanShowcaseGeometry

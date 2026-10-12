@@ -6,7 +6,11 @@ dist
 # Temporary, scratch, and prompt files
 *prompt*.md
 *.prompt.md
+PROJECT_STATE.md
 scripts/
 scratch/
 temp/
+stitch/
+public/beyond/
 *.log
+

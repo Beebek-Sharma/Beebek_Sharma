@@ -1,0 +1,409 @@
+/* ==========================================================================
+   Viral Interactive Moving Avatar Guide — Instagram Reel Style
+   Full-Page Mobility, Drag & Drop, & Contextual Interaction Guidance
+   ========================================================================== */
+
+/* ── Fixed Host Container (Glides across viewport) ── */
+.viral-avatar-host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 66px;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: none;
+  z-index: 990;
+  cursor: grab;
+  /* Hardware-accelerated smooth glide when transitioning between hero slot and floating guide */
+  transition: transform 0.46s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  will-change: transform;
+  pointer-events: auto;
+}
+
+.viral-avatar-host.is-dragging {
+  cursor: grabbing;
+  transition: none !important;
+}
+
+/* Slot reserved inside .hero-actions to ensure 0 layout shift */
+.hero-avatar-anchor {
+  display: inline-flex;
+  width: 66px;
+  height: 66px;
+  margin-left: 0.85rem;
+  vertical-align: middle;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+/* ── Glowing Floating Avatar Halo ── */
+.viral-avatar-halo {
+  position: relative;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: viralFloatBob 3.2s ease-in-out infinite;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.viral-avatar-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.35) 0%, rgba(74, 222, 128, 0.15) 50%, transparent 75%);
+  box-shadow: 0 0 24px rgba(74, 222, 128, 0.45), 0 0 48px rgba(74, 222, 128, 0.2);
+  pointer-events: none;
+  animation: viralPulseGlow 2.4s ease-in-out infinite alternate;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes viralFloatBob {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(1.4deg);
+  }
+}
+
+@keyframes viralPulseGlow {
+  0% {
+    opacity: 0.75;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.viral-avatar-halo:hover {
+  transform: translateY(-3px) scale(1.06);
+}
+
+.viral-avatar-halo:hover .viral-avatar-glow {
+  box-shadow: 0 0 32px rgba(74, 222, 128, 0.7), 0 0 60px rgba(74, 222, 128, 0.35);
+}
+
+.viral-avatar-halo:active {
+  transform: scale(0.96);
+}
+
+.viral-avatar-mesh {
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.45));
+}
+
+/* ── Speech / Thought Bubble (Exact Comic Style from Clip) ── */
+.viral-speech-bubble {
+  position: absolute;
+  background: #fdfefd;
+  color: #111a14;
+  padding: 0.65rem 0.95rem 0.65rem 1.05rem;
+  border-radius: 20px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  cursor: pointer;
+  z-index: 30;
+  pointer-events: auto;
+  animation: viralBubblePop 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 190px;
+  max-width: 320px;
+  line-height: 1.34;
+}
+
+.viral-speech-bubble:hover {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 16px rgba(74, 222, 128, 0.25);
+}
+
+@keyframes viralBubblePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.88) translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Thought Dots Connector Geometry (Default: Bubble above avatar) */
+.viral-speech-bubble.is-flip-up {
+  bottom: calc(100% + 14px);
+}
+
+.viral-speech-bubble.is-flip-up::before {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fdfefd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.viral-speech-bubble.is-flip-up::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fdfefd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+/* Flipped below avatar (when dragged near top of viewport) */
+.viral-speech-bubble.is-flip-down {
+  top: calc(100% + 14px);
+}
+
+.viral-speech-bubble.is-flip-down::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #fdfefd;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.viral-speech-bubble.is-flip-down::after {
+  content: '';
+  position: absolute;
+  top: -14px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fdfefd;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+/* Horizontal alignments & accurate connector dot placement directly to avatar head */
+.viral-speech-bubble.is-align-right {
+  right: 4px;
+}
+.viral-speech-bubble.is-align-right::before {
+  right: 25px;
+}
+.viral-speech-bubble.is-align-right::after {
+  right: 28px;
+}
+
+.viral-speech-bubble.is-align-left {
+  left: 4px;
+}
+.viral-speech-bubble.is-align-left::before {
+  left: 25px;
+}
+.viral-speech-bubble.is-align-left::after {
+  left: 28px;
+}
+
+.viral-speech-bubble.is-align-center {
+  left: 50%;
+  transform: translateX(-40%);
+}
+.viral-speech-bubble.is-align-center::before {
+  left: 38%;
+}
+.viral-speech-bubble.is-align-center::after {
+  left: 34%;
+}
+
+/* Content block inside bubble */
+.viral-bubble-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  flex: 1;
+}
+
+.viral-bubble-text {
+  font-family: 'Manrope', -apple-system, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #0d1611;
+  line-height: 1.34;
+}
+
+/* ── Interactive Quick Guide Navigation Chips ── */
+.viral-bubble-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.15rem;
+  padding-top: 0.4rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.12);
+}
+
+.viral-action-chip {
+  font-family: var(--mono, 'DM Mono', monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(13, 22, 17, 0.08);
+  color: #0d1611;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.viral-action-chip:hover {
+  background: #111a14;
+  color: #4ade80;
+  border-color: #111a14;
+  transform: translateY(-1px);
+}
+
+.viral-action-chip-accent {
+  background: rgba(74, 222, 128, 0.18);
+  border-color: rgba(74, 222, 128, 0.4);
+  color: #0b4526;
+}
+
+.viral-action-chip-accent:hover {
+  background: #0b4526;
+  color: #4ade80;
+}
+
+/* Dismiss (x) button */
+.viral-bubble-dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.08);
+  color: #4e5c56;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  margin-top: -1px;
+  margin-right: -3px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.viral-bubble-dismiss:hover {
+  background: rgba(0, 0, 0, 0.18);
+  color: #111a14;
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   Light Mode Overrides
+   ========================================================================== */
+[data-theme="light"] .viral-speech-bubble {
+  background: #ffffff;
+  color: #111a14;
+  border: 1.5px solid rgba(23, 77, 61, 0.2);
+  box-shadow: 0 12px 30px rgba(160, 185, 175, 0.4), 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .viral-speech-bubble::before,
+[data-theme="light"] .viral-speech-bubble::after {
+  background: #ffffff;
+  border-color: rgba(23, 77, 61, 0.15);
+}
+
+[data-theme="light"] .viral-bubble-text {
+  color: #111a14;
+}
+
+[data-theme="light"] .viral-action-chip {
+  background: rgba(23, 77, 61, 0.08);
+  color: #174d3d;
+  border-color: rgba(23, 77, 61, 0.18);
+}
+
+[data-theme="light"] .viral-action-chip:hover {
+  background: #174d3d;
+  color: #ffffff;
+}
+
+[data-theme="light"] .viral-avatar-glow {
+  background: radial-gradient(circle, rgba(23, 77, 61, 0.2) 0%, rgba(23, 77, 61, 0.08) 50%, transparent 75%);
+  box-shadow: 0 0 20px rgba(23, 77, 61, 0.3), 0 0 40px rgba(23, 77, 61, 0.1);
+}
+
+[data-theme="light"] .viral-avatar-halo:hover .viral-avatar-glow {
+  box-shadow: 0 0 28px rgba(23, 77, 61, 0.45), 0 0 50px rgba(23, 77, 61, 0.2);
+}
+
+/* ==========================================================================
+   Mobile & Responsive Viewports
+   ========================================================================== */
+@media (max-width: 768px) {
+  .viral-avatar-host {
+    width: 58px;
+    height: 58px;
+  }
+
+  .viral-avatar-halo {
+    width: 58px;
+    height: 58px;
+  }
+
+  .hero-avatar-anchor {
+    width: 58px;
+    height: 58px;
+    margin-left: 0.5rem;
+  }
+
+  .viral-speech-bubble {
+    max-width: 250px;
+    font-size: 0.78rem;
+    padding: 0.55rem 0.85rem;
+  }
+
+  .viral-bubble-text {
+    font-size: 0.78rem;
+  }
+}
+
+/* ==========================================================================
+   Accessibility: prefers-reduced-motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .viral-avatar-host {
+    transition: none !important;
+  }
+
+  .viral-avatar-halo {
+    animation: none !important;
+  }
+
+  .viral-avatar-glow {
+    animation: none !important;
+  }
+
+  .viral-speech-bubble {
+    animation: none !important;
+  }
+}

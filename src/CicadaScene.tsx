@@ -34,41 +34,6 @@ function InvalidateBridge({ invalidateRef }: { invalidateRef: MutableRefObject<(
   return null
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   THE RIVER OF TIME (光阴之河)
-   Concentric orbital temporal rings and flowing time particles
-   ═══════════════════════════════════════════════════════════════════ */
-
-function RiverOfTime({ quality, reduced }: { quality: SceneQuality; reduced: boolean }) {
-  const ring1 = useRef<THREE.Mesh>(null)
-  const ring2 = useRef<THREE.Mesh>(null)
-  const ring3 = useRef<THREE.Mesh>(null)
-  const low = quality === 'low'
-
-  useFrame((_, delta) => {
-    if (reduced) return
-    if (ring1.current) ring1.current.rotation.z += delta * 0.15
-    if (ring2.current) ring2.current.rotation.z -= delta * 0.22
-    if (ring3.current) ring3.current.rotation.z += delta * 0.09
-  })
-
-  return (
-    <group position={[0, 0.05, 0]}>
-      <mesh ref={ring1} rotation={[1.15, 0.2, 0]}>
-        <torusGeometry args={[1.22, 0.007, low ? 3 : 6, low ? 36 : 64]} />
-        <meshStandardMaterial color="#e5c158" roughness={0.3} metalness={0.9} transparent opacity={0.65} />
-      </mesh>
-      <mesh ref={ring2} rotation={[1.3, -0.3, 0.4]}>
-        <torusGeometry args={[0.98, 0.005, low ? 3 : 5, low ? 30 : 54]} />
-        <meshStandardMaterial color="#5b9c82" roughness={0.2} metalness={0.7} transparent opacity={0.5} />
-      </mesh>
-      <mesh ref={ring3} rotation={[1.05, 0.4, -0.2]}>
-        <torusGeometry args={[0.74, 0.006, low ? 3 : 5, low ? 24 : 48]} />
-        <meshStandardMaterial color="#c4a44e" roughness={0.35} metalness={0.8} transparent opacity={0.55} />
-      </mesh>
-    </group>
-  )
-}
 
 /* ═══════════════════════════════════════════════════════════════════
    SPRING AUTUMN CICADA (春秋蝉)
@@ -430,7 +395,6 @@ function CicadaRelicGeometry({
   return (
     <group ref={relicGroup} position={[0, -0.06, 0]} scale={[0.58, 0.58, 0.58]} rotation={[0.18, -0.35, 0]}>
       <SpringAutumnCicada quality={quality} reduced={reduced} />
-      <RiverOfTime quality={quality} reduced={reduced} />
       <CicadaPedestal quality={quality} />
     </group>
   )
@@ -521,7 +485,7 @@ export function CicadaScene() {
         <InvalidateBridge invalidateRef={invalidateRef} />
         <ambientLight intensity={0.55} />
         <pointLight
-          color="#fef08a"
+          color="#ffe100ff"
           intensity={quality === 'low' ? 1.4 : 2.5}
           distance={7}
           position={[2.2, 2.5, 3.2]}
@@ -543,7 +507,9 @@ export function CicadaScene() {
 
       <div className="fang-scene-label">
         <span>春秋蝉 · SPRING AUTUMN CICADA</span>
+        <span>DRAG TO ROTATE</span>
       </div>
+
     </div>
   )
 }

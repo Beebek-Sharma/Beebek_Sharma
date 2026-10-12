@@ -1,0 +1,436 @@
+/* ==========================================================================
+   Synthetic Agent Avatar Companion — Liquid Glassmorphic Dock
+   ========================================================================== */
+
+.avatar-companion-dock {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 85;
+  font-family: 'Manrope', -apple-system, sans-serif;
+  user-select: none;
+  pointer-events: auto;
+}
+
+/* ── Minimized Capsule Pill Trigger ── */
+.companion-pill-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.4rem;
+  border-radius: 999px;
+  background: var(--glass-pill-bg, linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%));
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  border: var(--glass-pill-border, 1.5px solid rgba(255, 255, 255, 0.16));
+  box-shadow: var(--glass-pill-shadow, inset 0 1.5px 1px rgba(255, 255, 255, 0.32), inset 0 -1px 2px rgba(0, 0, 0, 0.4), 0 8px 22px rgba(0, 0, 0, 0.35));
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              box-shadow 0.25s ease;
+}
+
+.companion-pill-trigger:hover {
+  transform: translateY(-2px);
+  border-color: rgba(103, 214, 174, 0.5);
+  box-shadow: inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45), 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 16px rgba(74, 222, 128, 0.2);
+}
+
+.companion-pill-trigger:active {
+  transform: translateY(0);
+}
+
+.companion-pill-avatar-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d1a15;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.companion-pill-status {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.companion-beacon-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+  animation: companion-pulse 2.4s infinite ease-in-out;
+}
+
+@keyframes companion-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 6px #4ade80;
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.85);
+    box-shadow: 0 0 2px #4ade80;
+  }
+}
+
+.companion-pill-label {
+  font-family: var(--mono, 'DM Mono', monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+
+.companion-pill-shortcut {
+  font-size: 0.72rem;
+  color: var(--accent-bright, #5b9c82);
+  margin-left: 0.1rem;
+}
+
+/* ── Expanded Glass Card ── */
+.companion-card {
+  width: clamp(270px, 86vw, 305px);
+  border-radius: 24px;
+  padding: 1.15rem;
+  background: var(--glass-bg, linear-gradient(135deg, rgba(28, 35, 31, 0.8) 0%, rgba(13, 20, 17, 0.6) 100%));
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: var(--glass-border, 1.5px solid rgba(255, 255, 255, 0.14));
+  box-shadow: var(--glass-shadow, inset 0 1.5px 1px rgba(255, 255, 255, 0.25), inset 0 -1.5px 2px rgba(0, 0, 0, 0.6), 0 24px 50px rgba(0, 0, 0, 0.7));
+  animation: companion-enter 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+@keyframes companion-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Card Header ── */
+.companion-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.companion-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.companion-badge-title {
+  font-family: var(--mono, 'DM Mono', monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent-bright, #5b9c82);
+  text-transform: uppercase;
+}
+
+.companion-close-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.companion-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+/* ── Pedestal Well (Avatar Display Stage) ── */
+.companion-stage-well {
+  position: relative;
+  width: 100%;
+  min-height: 180px;
+  border-radius: 18px;
+  background: rgba(6, 12, 9, 0.65);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5), inset 0 -1px 1px rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.75rem 0.5rem 0.5rem;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.companion-stage-well:hover {
+  border-color: rgba(91, 156, 130, 0.35);
+  background: rgba(8, 16, 12, 0.75);
+}
+
+.companion-avatar-element {
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55));
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.companion-stage-well:hover .companion-avatar-element {
+  transform: scale(1.04);
+}
+
+.companion-stage-well:active .companion-avatar-element {
+  transform: scale(0.98);
+}
+
+.companion-stage-hint {
+  margin-top: 0.25rem;
+  font-family: var(--mono, 'DM Mono', monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+  opacity: 0.75;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.companion-stage-well:hover .companion-stage-hint {
+  opacity: 1;
+  color: var(--accent-bright, #5b9c82);
+}
+
+/* ── Presets Section ── */
+.companion-presets-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.companion-section-title {
+  font-family: var(--mono, 'DM Mono', monospace);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+  text-transform: uppercase;
+}
+
+.companion-preset-chips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+}
+
+.companion-preset-chip {
+  padding: 0.3rem 0.4rem;
+  border-radius: 999px;
+  font-family: var(--mono, 'DM Mono', monospace);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--muted);
+  cursor: pointer;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.companion-preset-chip:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.companion-preset-chip.is-active {
+  background: linear-gradient(135deg, rgba(29, 82, 66, 0.85) 0%, rgba(20, 60, 48, 0.6) 100%);
+  border-color: rgba(132, 243, 201, 0.55);
+  color: #ffffff;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.5), 0 4px 12px rgba(23, 77, 61, 0.35);
+}
+
+/* ── Footer / Telemetry Controls ── */
+.companion-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--border);
+}
+
+.companion-playback-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: var(--mono, 'DM Mono', monospace);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.companion-playback-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.companion-telemetry-tag {
+  font-family: var(--mono, 'DM Mono', monospace);
+  font-size: 0.58rem;
+  color: var(--faint);
+  letter-spacing: 0.06em;
+}
+
+/* ==========================================================================
+   Light Mode Overrides (Matching crystal frosted glass screenshot)
+   ========================================================================== */
+[data-theme="light"] .companion-pill-trigger {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(245, 248, 246, 0.6) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 1.5px 1.5px #ffffff, 0 8px 22px rgba(160, 185, 175, 0.25), 0 2px 6px rgba(0, 0, 0, 0.04);
+  color: #111815;
+}
+
+[data-theme="light"] .companion-pill-trigger:hover {
+  border-color: #ffffff;
+  box-shadow: inset 0 1.5px 1.5px #ffffff, 0 12px 28px rgba(140, 175, 160, 0.35);
+}
+
+[data-theme="light"] .companion-pill-avatar-thumb {
+  background: #f0f5f2;
+  border-color: rgba(23, 77, 61, 0.15);
+}
+
+[data-theme="light"] .companion-pill-label {
+  color: #111815;
+}
+
+[data-theme="light"] .companion-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(244, 248, 246, 0.75) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 20px 48px -6px rgba(160, 185, 175, 0.35), 0 4px 14px rgba(0, 0, 0, 0.04), inset 0 2px 1.5px #ffffff;
+}
+
+[data-theme="light"] .companion-close-btn {
+  background: rgba(23, 77, 61, 0.06);
+  border-color: rgba(23, 77, 61, 0.15);
+  color: #4e5c56;
+}
+
+[data-theme="light"] .companion-close-btn:hover {
+  background: rgba(23, 77, 61, 0.12);
+  color: #111815;
+  border-color: rgba(23, 77, 61, 0.3);
+}
+
+[data-theme="light"] .companion-stage-well {
+  background: rgba(234, 241, 237, 0.7);
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 2px 6px rgba(160, 175, 168, 0.3), inset 0 1px 2px #ffffff;
+}
+
+[data-theme="light"] .companion-stage-well:hover {
+  border-color: rgba(20, 99, 77, 0.25);
+  background: rgba(240, 246, 243, 0.85);
+}
+
+[data-theme="light"] .companion-badge-title {
+  color: #14634d;
+}
+
+[data-theme="light"] .companion-preset-chip {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(255, 255, 255, 0.95);
+  color: #4e5c56;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .companion-preset-chip:hover {
+  color: #111815;
+  border-color: rgba(20, 99, 77, 0.25);
+  background: #ffffff;
+}
+
+[data-theme="light"] .companion-preset-chip.is-active {
+  background: linear-gradient(135deg, rgba(29, 82, 66, 0.92) 0%, rgba(23, 77, 61, 0.8) 100%);
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #ffffff;
+  box-shadow: inset 0 1px 1px #ffffff, 0 4px 12px rgba(23, 77, 61, 0.25);
+}
+
+[data-theme="light"] .companion-playback-btn {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(255, 255, 255, 0.95);
+  color: #4e5c56;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .companion-playback-btn:hover {
+  background: #ffffff;
+  color: #111815;
+  border-color: rgba(20, 99, 77, 0.25);
+}
+
+/* ==========================================================================
+   Mobile & Responsive Adjustments
+   ========================================================================== */
+@media (max-width: 640px) {
+  .avatar-companion-dock {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .companion-card {
+    width: min(calc(100vw - 2rem), 300px);
+  }
+
+  .companion-stage-well {
+    min-height: 160px;
+  }
+}
+
+/* ==========================================================================
+   Accessibility: prefers-reduced-motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .companion-beacon-dot {
+    animation: none;
+  }
+
+  .companion-pill-trigger,
+  .companion-card,
+  .companion-avatar-element,
+  .companion-close-btn,
+  .companion-preset-chip {
+    transition: none !important;
+    animation: none !important;
+  }
+}

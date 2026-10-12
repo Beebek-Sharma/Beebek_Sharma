@@ -46,9 +46,10 @@ export function Header() {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 220
       for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i])
+        const id = sections[i]
+        const el = document.getElementById(id)
         if (el && el.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i])
+          setActiveSection(id)
           return
         }
       }
@@ -82,16 +83,16 @@ export function Header() {
         {/* Left: Brand & Live Status Beacon */}
         <div className="header-brand-wrap">
           <a className="wordmark" href="#top" aria-label="Beebek Sharma home" onClick={() => setOpen(false)}>
-            <span className="wordmark-prefix">// </span>
+            <img
+              src="/beebek-sharma-avatar.jpg"
+              alt="Beebek Sharma"
+              className="navbar-profile-avatar"
+              width={26}
+              height={26}
+              loading="eager"
+            />
             <DecryptedText text="BEEBEK" animateOn="hover" speed={30} sequential />
           </a>
-          <div className="nav-status-badge" title="Status: Online & Available for engineering projects">
-            <span className="status-dot">
-              <span className="status-dot-ping" />
-              <span className="status-dot-core" />
-            </span>
-            <ShinyText text="ONLINE" speed={3} className="status-text" />
-          </div>
         </div>
 
         {/* Center: Desktop Floating Dock */}

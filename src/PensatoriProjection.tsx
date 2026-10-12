@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react'
+import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react'
 import type { Project } from './data'
 import { DecryptedText } from './DecryptedText'
 import { ClothDistortionCanvas } from './ClothDistortionCanvas'
@@ -10,12 +10,14 @@ interface PensatoriProjectionProps {
 }
 
 type ProjectionMode = 'reel' | 'index'
+type ProjectCategory = 'all' | 'fullstack' | 'systems' | 'backend'
 
 export const PensatoriProjection: React.FC<PensatoriProjectionProps> = ({
   projects,
   onSelectProject,
 }) => {
   const [mode, setMode] = useState<ProjectionMode>('reel')
+  const [category, setCategory] = useState<ProjectCategory>('all')
   const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null)
   const [activeIndex, setActiveIndex] = useState(0)
 
@@ -32,6 +34,40 @@ export const PensatoriProjection: React.FC<PensatoriProjectionProps> = ({
   const targetScrollRef = useRef(0)
   const currentScrollRef = useRef(0)
 
+  // Google Stitch domain badges mapping
+  const getDomainBadge = useCallback((project: Project): string => {
+    if (project.title === 'EduConnect') return 'ACADEMIC PORTAL'
+    if (project.title === 'LAN Share') return 'P2P PROTOCOL'
+    if (project.title.includes('Institute Management')) return 'ERP SOLUTION'
+    if (project.title === 'MyDM') return 'STREAM ENGINE'
+    if (project.title === 'Sticky Notes') return 'INTERACTIVE CANVAS'
+    if (project.title === 'Medium') return 'EDITORIAL PLATFORM'
+    if (project.title.includes('Expense Tracker')) return 'BACKEND API'
+    return project.category.toUpperCase()
+  }, [])
+
+  // Filter categorization
+  const getProjectCategory = useCallback((project: Project): 'fullstack' | 'systems' | 'backend' => {
+    if (project.title === 'LAN Share' || project.title === 'MyDM') return 'systems'
+    if (project.title.includes('Expense Tracker')) return 'backend'
+    return 'fullstack'
+  }, [])
+
+  const filteredProjects = useMemo(() => {
+    if (category === 'all') return projects
+    return projects.filter((p) => getProjectCategory(p) === category)
+  }, [projects, category, getProjectCategory])
+
+  const handleCategoryChange = (newCat: ProjectCategory) => {
+    setCategory(newCat)
+    setActiveIndex(0)
+    targetScrollRef.current = 0
+    currentScrollRef.current = 0
+    if (reelRef.current) {
+      reelRef.current.scrollLeft = 0
+    }
+  }
+
   // Update active slide index and progress bar
   const updateMetrics = useCallback(() => {
     if (!reelRef.current) return
@@ -40,11 +76,11 @@ export const PensatoriProjection: React.FC<PensatoriProjectionProps> = ({
     if (maxScroll > 0) {
       const progress = Math.min(1, Math.max(0, scrollLeft / maxScroll))
       setScrollProgress(progress)
-      const cardWidth = clientWidth > 768 ? 320 : 280
-      const index = Math.min(projects.length - 1, Math.max(0, Math.round(scrollLeft / cardWidth)))
+      const cardWidth = clientWidth > 768 ? 370 : 310
+      const index = Math.min(filteredProjects.length - 1, Math.max(0, Math.round(scrollLeft / cardWidth)))
       setActiveIndex(index)
     }
-  }, [projects.length])
+  }, [filteredProjects.length])
 
   // Mouse Wheel & Touchpad Horizontal Scroll System
   useEffect(() => {
@@ -168,7 +204,7 @@ export const PensatoriProjection: React.FC<PensatoriProjectionProps> = ({
   // Scroll reel to specific index via ticks or arrows
   const scrollToIndex = (index: number) => {
     if (!reelRef.current) return
-    const cardWidth = reelRef.current.clientWidth > 768 ? 320 : 280
+    const cardWidth = reelRef.current.clientWidth > 768 ? 370 : 310
     const target = index * cardWidth
     const maxScroll = reelRef.current.scrollWidth - reelRef.current.clientWidth
     targetScrollRef.current = Math.min(maxScroll, Math.max(0, target))
@@ -177,16 +213,48 @@ export const PensatoriProjection: React.FC<PensatoriProjectionProps> = ({
 
   return (
     <div ref={shellRef} className="pensatori-projection-shell">
-      {/* Telemetry Header & Pensatori Mode Switch Icons */}
+      {/* Telemetry Header & Google Stitch Mode / Filter Switch Control */}
       <div className="pensatori-telemetry-bar">
         <div className="pensatori-telemetry-left">
           <span className="pensatori-status-beacon" aria-hidden="true" />
-          <span className="pensatori-telemetry-status">STATUS: PROJECTION ACTIVE</span>
+          <span className="pensatori-telemetry-status">CURATED DISPATCH</span>
           <span className="pensatori-telemetry-sep">/</span>
           <span className="pensatori-telemetry-module">MODULE 03 — RECURSIVE WORK SYSTEM</span>
         </div>
 
-        {/* Pensatori Top-Right Toggle Pill Buttons [-] and [=] */}
+        {/* Google Stitch Neumorphic Filter Pill Tray */}
+        <div className="pensatori-filter-pills" role="tablist" aria-label="Project categories">
+          <button
+            type="button"
+            className={`pensatori-filter-pill ${category === 'all' ? 'is-active' : ''}`}
+            onClick={() => handleCategoryChange('all')}
+          >
+            All ({projects.length})
+          </button>
+          <button
+            type="button"
+            className={`pensatori-filter-pill ${category === 'fullstack' ? 'is-active' : ''}`}
+            onClick={() => handleCategoryChange('fullstack')}
+          >
+            Full-Stack
+          </button>
+          <button
+            type="button"
+            className={`pensatori-filter-pill ${category === 'systems' ? 'is-active' : ''}`}
+            onClick={() => handleCategoryChange('systems')}
+          >
+            Systems & P2P
+          </button>
+          <button
+            type="button"
+            className={`pensatori-filter-pill ${category === 'backend' ? 'is-active' : ''}`}
+            onClick={() => handleCategoryChange('backend')}
+          >
+            Backend & APIs
+          </button>
+        </div>
+
+        {/* Top-Right Toggle Pill Buttons [-] Reel and [=] Index */}
         <div className="pensatori-mode-switches" role="tablist" aria-label="Project Projection View">
           <button
             type="button"
@@ -194,10 +262,9 @@ export const PensatoriProjection: React.FC<PensatoriProjectionProps> = ({
             aria-selected={mode === 'reel'}
             className={`pensatori-pill-toggle-btn ${mode === 'reel' ? 'is-active' : ''}`}
             onClick={() => setMode('reel')}
-            title="Film Reel Projection View"
-            aria-label="Film Reel Projection View"
+            title="Film Reel Horizontal Scroll View"
+            aria-label="Film Reel Horizontal Scroll View"
           >
-            {/* Pensatori single-bar icon [-] */}
             <span className="pensatori-icon-bar" aria-hidden="true" />
             <span className="pensatori-toggle-label">REEL</span>
           </button>
@@ -208,10 +275,9 @@ export const PensatoriProjection: React.FC<PensatoriProjectionProps> = ({
             aria-selected={mode === 'index'}
             className={`pensatori-pill-toggle-btn ${mode === 'index' ? 'is-active' : ''}`}
             onClick={() => setMode('index')}
-            title="Architectural Index Projection View"
-            aria-label="Architectural Index Projection View"
+            title="Architectural Index Table View"
+            aria-label="Architectural Index Table View"
           >
-            {/* Pensatori dual-bar icon [=] */}
             <span className="pensatori-icon-dual-bar" aria-hidden="true">
               <span className="dual-bar-line" />
               <span className="dual-bar-line" />
@@ -221,7 +287,7 @@ export const PensatoriProjection: React.FC<PensatoriProjectionProps> = ({
         </div>
       </div>
 
-      {/* PROJECTION MODE 1: PENSATORI FILM REEL CAROUSEL */}
+      {/* PROJECTION MODE 1: PENSATORI FILM REEL WITH GOOGLE STITCH EDGE DESIGN */}
       {mode === 'reel' && (
         <div className="pensatori-reel-viewport">
           <div
@@ -233,9 +299,10 @@ export const PensatoriProjection: React.FC<PensatoriProjectionProps> = ({
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
           >
-            {projects.map((project, idx) => {
+            {filteredProjects.map((project, idx) => {
               const previewImg = project.bannerImage || project.screenshots?.[0]?.src || '/projects/mydm-dashboard.png'
               const isCentered = idx === activeIndex
+              const domainBadge = getDomainBadge(project)
 
               return (
                 <div
@@ -254,52 +321,83 @@ export const PensatoriProjection: React.FC<PensatoriProjectionProps> = ({
                   }}
                   aria-label={`Inspect ${project.title}`}
                 >
-                  {/* Card Visual Frame */}
-                  <div className="pensatori-slide-media-wrap">
+                  {/* Google Stitch Inset Media Well */}
+                  <div className="pensatori-slide-media-well">
                     <div className="pensatori-slide-media-inner">
                       <ClothDistortionCanvas
                         imageSrc={previewImg}
                         alt={project.title}
-                        aspectRatio={12 / 16}
+                        aspectRatio={16 / 10}
                         interactive={true}
                         className="pensatori-slide-canvas"
                       />
-                      <div className="pensatori-slide-overlay-veil" aria-hidden="true" />
                     </div>
 
-                    {/* Corner Telemetry Stamps */}
-                    <div className="pensatori-slide-badges">
-                      <span className="pensatori-slide-num">MOD–{project.number}</span>
-                      {project.liveUrl && (
-                        <span className="pensatori-slide-live-tag">
-                          <span className="live-dot" aria-hidden="true" />
-                          <span>LIVE</span>
-                        </span>
-                      )}
+                    {/* Stitch Frosted Domain Tag Badge (top-left) */}
+                    <div className="pensatori-slide-domain-badge">
+                      <span>{domainBadge}</span>
                     </div>
+
+                    {/* Stitch Live Status Badge (top-right) */}
+                    {project.liveUrl && (
+                      <div className="pensatori-slide-live-tag">
+                        <span className="live-dot" aria-hidden="true" />
+                        <span>LIVE</span>
+                      </div>
+                    )}
                   </div>
 
-                  {/* Pensatori Hover Title Reveal (Slides up from translateY(40%)) */}
-                  <div className="pensatori-slide-caption">
-                    <div className="pensatori-caption-inner">
-                      <h4 className="pensatori-caption-title">{project.title}</h4>
-                      <span className="pensatori-caption-company">
-                        — {project.category}
-                      </span>
+                  {/* Card Content Block (Google Stitch Anatomy) */}
+                  <div className="pensatori-slide-content">
+                    {/* Header Row: Title + Neumorphic Circular Arrow Button */}
+                    <div className="pensatori-slide-header-row">
+                      <h3 className="pensatori-slide-title">{project.title}</h3>
+                      <button
+                        type="button"
+                        className="pensatori-slide-action-btn"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onSelectProject(project)
+                        }}
+                        aria-label={`Open details for ${project.title}`}
+                        title="View details"
+                      >
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="7" y1="17" x2="17" y2="7" />
+                          <polyline points="7 7 17 7 17 17" />
+                        </svg>
+                      </button>
                     </div>
-                    <span className="pensatori-caption-hint">
-                      <span>INSPECT</span>
-                      <span className="arrow-glyph" aria-hidden="true">↗</span>
-                    </span>
+
+                    {/* Clean Descriptive Copy */}
+                    <p className="pensatori-slide-desc">
+                      {project.description}
+                    </p>
+
+                    {/* Google Stitch Neumorphic Tech Chip Tray */}
+                    <div className="pensatori-slide-chip-tray">
+                      {project.technologies.slice(0, 4).map((tech) => (
+                        <span key={tech} className="pensatori-slide-chip">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )
             })}
           </div>
 
-          {/* Under-Reel Telemetry & Tick Marks (matching Pensatori screenshot) */}
+          {/* Under-Reel Telemetry & Nav Arrows */}
           <div className="pensatori-reel-footer">
-            {/* Pensatori Reel Nav Arrows */}
+            <div className="pensatori-reel-progress-wrap">
+              <div
+                className="pensatori-reel-progress-fill"
+                style={{ width: `${Math.round(scrollProgress * 100)}%` }}
+              />
+            </div>
+
+            {/* Reel Nav Arrows */}
             <div className="pensatori-reel-arrows">
               <button
                 type="button"
@@ -316,8 +414,8 @@ export const PensatoriProjection: React.FC<PensatoriProjectionProps> = ({
               <button
                 type="button"
                 className="pensatori-nav-arrow-btn"
-                onClick={() => scrollToIndex(Math.min(projects.length - 1, activeIndex + 1))}
-                disabled={activeIndex === projects.length - 1}
+                onClick={() => scrollToIndex(Math.min(filteredProjects.length - 1, activeIndex + 1))}
+                disabled={activeIndex === filteredProjects.length - 1}
                 aria-label="Next project"
                 title="Scroll right"
               >

@@ -1,25 +1,25 @@
 import { Header } from './components'
-import { Preloader } from './Preloader'
-import { About, BeyondTheCode, Contact, Education, EngineeringLab, Experience, Hero, SelectedWork, WhatIBuild } from './sections'
+import { AvatarCompanion } from './components/avatar/AvatarCompanion'
+import { ViralHeroAvatar } from './components/avatar/ViralHeroAvatar'
+import { About, BeyondTheCode, Contact, Experience, Hero, SelectedWork, SiteFooter, WhatIBuild } from './sections'
 import './styles.css'
 
 function App() {
   return (
     <div className="site">
-      <Preloader />
       <Header />
       <main id="main-content">
         <Hero />
         <WhatIBuild />
         <SelectedWork />
         <Experience />
-        <EngineeringLab />
         <About />
         <BeyondTheCode />
-        <Education />
         <Contact />
       </main>
-      <footer className="site-footer"><span>Beebek Sharma</span><a href="#top">Back to top ↑</a></footer>
+      <SiteFooter />
+      <ViralHeroAvatar />
+      <AvatarCompanion />
     </div>
   )
 }
